@@ -2,17 +2,45 @@
 
 <div x-data="dialog()">
   <button x-spread="trigger" class="hidden" id="MenuTrigger"></button>
-  <div class="dialog flex items-center" x-spread="dialog" x-cloak>
-    <div class="dialog-content">
-      <div class="dialog-header">Create item
-        <button type="button" class="btn btn-light btn-sm btn-icon" aria-label="Close" @click="close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-      </div>
-      <div class="dialog-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam eius fugiat illum repudiandae commodi inventore magnam unde vero cupiditate molestiae?</div>
-      <div class="dialog-footer">
-        <button type="button" class="btn btn-light" @click="close">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
+  <div class="dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
+    <div class="block dialog-content px-[30px] py-[20px] rounded-[28px]">
+			<div class="text-xl border-0 my-3">Create item</div>
+
+				<label class="block mb-3">
+					<span class="text-gray-700">Food</span>
+					<input type="text" class="input" placeholder="Sandwiches" />
+				</label>
+				<div class="grid grid-cols-2 gap-2">
+					<label class="block mb-3">
+						<span class="text-gray-700">Cost to buy</span>
+						<input type="number" class="input" placeholder="100" />
+					</label>
+					<label class="block mb-3">
+						<span class="text-gray-700">Sell value</span>
+						<input type="number" class="input" placeholder="0" />
+					</label>
+				</div>
+				<div class="grid grid-cols-2 gap-2">
+				<label class="block mb-3">
+					<span class="text-gray-700">Categories</span>
+					<input type="text" class="input" placeholder="Vegetarian, Gluten-Free, Nut-Free" />
+				</label>
+					<label class="block mb-3">
+					<span class="text-gray-700">Type</span>
+					<select type="text" class="input wide" id="select">
+						<option>Starter</option>
+						<option>Entrée</option>
+						<option>Drinks</option>
+						<option>Dessert</option>
+						<option>Other</option>
+					</select>
+	
+				</label>
+				</div>
+					
+			
+			<button type="button" class="float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 material-ripple focus:ring-0 rounded-full px-6 py-3">Create</button>
+				</div>
   </div>
 </div>
 
@@ -69,4 +97,4 @@
 	function addMenuItem() {
 		document.getElementById('MenuTrigger').click();
 	}
-</script> 
+</script>

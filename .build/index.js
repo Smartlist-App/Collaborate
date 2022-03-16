@@ -95,8 +95,8 @@ app.use(sessionMiddleware);
 io.use((socket, next) => sessionMiddleware(socket.request, {}, next));
 io.on("connection", (socket) => {
   console.log("a user connected");
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  socket.on("chat-message", (data) => {
+    io.emit("chat-message", data);
   });
 });
 app.use(async (req, res, next) => {

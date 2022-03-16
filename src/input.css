@@ -10,6 +10,12 @@
     animation: animation-scale 0.2s forwards;
     transform-origin: top 10px;
   }
+	.input  {
+		@apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0
+	}
+	option:hover {
+		background: #aaa
+	}
   .remove-btn {
     @apply hover:bg-gray-100 cursor-pointer w-10 h-10 flex items-center rounded-full justify-center outline-none ring-gray-900;
   }
