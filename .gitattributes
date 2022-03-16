@@ -2,5 +2,4 @@
 *.ts linguist-vendored=false
 *.nix linguist-vendored=false
 *.js linguist-vendored=false
-*.css linguist-vendored=false
 *.json linguist-vendored=false
