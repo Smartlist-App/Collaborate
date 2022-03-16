@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../tailwind.config.js"],
+  "sourcesContent": ["module.exports = {\n  content: [\n\t\t\"./src/**/*.{html,js,ejs}\",\n\t\t\"./views/**/*.ejs\"\n\t],\n  theme: {\n    extend: {\n\t\t\tcolors: {\n\t\t\t\t'Amaranth': {  DEFAULT: '#ED3F54',  '50': '#FDE7EA',  '100': '#FBD4D9',  '200': '#F7AFB8',  '300': '#F48A96',  '400': '#F06475',  '500': '#ED3F54',  '600': '#DF152D',  '700': '#AC1023',  '800': '#780B18',  '900': '#45060E'},\n\t\t\t}\n\t\t},\n  },\n\tplugins: [require(\"kutty\")],\n}"],
+  "mappings": "AAAA,OAAO,UAAU;AAAA,EACf,SAAS;AAAA,IACT;AAAA,IACA;AAAA;AAAA,EAEA,OAAO;AAAA,IACL,QAAQ;AAAA,MACT,QAAQ;AAAA,QACP,YAAY,EAAG,SAAS,WAAY,MAAM,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO,WAAY,OAAO;AAAA;AAAA;AAAA;AAAA,EAIxN,SAAS,CAAC,QAAQ;AAAA;",
+  "names": []
+}

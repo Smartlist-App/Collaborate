@@ -1,0 +1,210 @@
+<% if(event === false) {%>
+	<%- include('404.html'); %>
+<% } else {%>
+<!doctype html>
+<html class="theme-<%=event.pageStyle;%>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+	<link rel=stylesheet href="https://kutty.netlify.app/build.css">
+	<script src="https://cdn.jsdelivr.net/npm/kutty@latest/dist/kutty.min.js"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Lato&family=Outfit:wght@500&family=Source+Serif+Pro:wght@600&display=swap" rel="stylesheet">
+  <style type="text/tailwindcss">
+    @layer components {
+			body {
+				@apply selection:bg-gray-900 selection:text-gray-100
+			}
+			input, label, button, .btn {
+				font-family:'Lato', sans-serif
+			}
+			.banner-img {
+				@apply w-full h-96 object-cover bg-[url('<%=event.banner%>')] bg-cover bg-no-repeat flex items-center justify-center text-white flex-col bg-fixed;
+		  	box-shadow:inset 0 0 0 2000px rgba(0, 0, 0, .5);
+			}
+			.dialog {
+				transition: all .2s !important;
+			}
+			.banner-img__heading {
+				@apply text-5xl
+			}
+			.banner-img__presents {
+				@apply text-sm text-gray-300 my-5 uppercase;
+				font-family: 'Inter', sans-serif;
+			}
+			.banner-img__subheading {
+				@apply text-lg my-3
+			}
+			.container {
+				@apply w-10/12 mx-auto pt-14
+			}
+			.container__grid {
+				@apply flex gap-6 flex-col md:flex-row lg:flex-row
+			}
+			.container__grid section:first-child {
+				@apply w-full md:w-[70%] lg:w-[70%] order-1 lg:order-none md:order-none
+			}
+			.container__grid section:last-child {
+				@apply w-full md:w-[30%] lg:w-[30%] bg-gray-100 rounded-lg p-4
+			}
+			.container__paragraph {
+				@apply text-gray-700
+			}
+			.container__paragraph--category {
+				@apply text-xs text-gray-800;
+				font-family: 'Inter', sans-serif
+			}
+			.link {
+				@apply underline hover:decoration-2 outline-none focus:ring ring-gray-900
+			}
+			.container__paragraph--content {
+				@apply text-gray-700 my-1 mb-5
+			}
+			.footer {
+				@apply bg-gray-100 p-8 text-center mt-6 text-gray-900
+			}
+			.banner-img__button {
+				@apply border-2 px-5 py-3 rounded text-sm inline-flex backdrop-blur-lg hover:shadow-lg bg-white text-gray-900 focus:ring-1 ring-inset ring-white outline-none border-white;
+			font-family: 'Inter', sans-serif
+			}
+			.banner-img__button--outlined {
+				@apply bg-transparent text-white hover:bg-[rgba(255,255,255,.1)] hover:text-white;
+			}
+			.banner-img__action {
+				@apply flex gap-3
+			}
+			/*
+				Themes: Modern
+			*/
+			.theme-modern .banner-img {
+				@apply text-left items-start px-10 lg:px-20 md:px-16
+			}
+			.theme-modern .banner-img__heading {
+				@apply border-4 p-3 m-0 flex text-left selection:bg-white selection:text-black backdrop-blur-lg;
+				font-family: 'Lato', sans-serif;
+			}
+			.banner-img__subheading {
+				@apply my-5 text-gray-300 text-xl;
+					font-family: 'Lato', sans-serif;
+			}
+			.theme-modern .banner-img {
+				@apply h-[95vh]
+			}
+			.theme-modern .container {
+				font-family: 'Lato', sans-serif;
+			}
+    }
+  </style>
+</head>
+<body>
+	<header class="banner-img">
+			<p class="banner-img__presents">Your mom presents...</p>
+			<h1 class="banner-img__heading"><%=event.title%></h1>
+			<h2 class="banner-img__subheading">
+				<%=event.short_description%>
+			</h2>
+			<section class="banner-img__action">
+				<div x-data="dialog()">
+					<button class="banner-img__button" id="signup-trigger" x-spread="trigger">Sign up now!</button>
+					  <div class="dialog items-center backdrop-blur-lg cursor-auto flex" x-spread="dialog" x-cloak>
+							<div class="dialog-content text-gray-900">
+								<div class="dialog-header text-lg">
+									<div style="font-family:'Inter', sans-serif">
+										Sign up
+										<p style="font-family:'Lato', sans-serif" class="text-sm text-gray-700">You'll be notified when this event starts</p>
+									</div>
+								</div>
+								<div class="dialog-body grid grid-cols-2 items-center gap-2">
+									 <label class="block">
+		              		<span class="text-gray-700">Full name</span>
+		                	<input type="text" id="name" class="mt-1 block w-full" placeholder="John Doe" />
+		              </label>
+									<label class="block">
+		              		<span class="text-gray-700">Email</span>
+		                	<input type="text" class="mt-1 block w-full" placeholder="hello@smartlist.tech" />
+		              </label>
+								</div>
+								<div class="dialog-footer">
+									<button type="button" class="btn btn-light" @click="close">Cancel</button>
+									<button type="button" class="btn bg-gray-900 text-white ring-black">Next</button>
+								</div>
+							</div>
+						</div>
+				</div>
+				<button class="banner-img__button banner-img__button--outlined">Add to my calendar</button>
+			</section>
+	</header>
+	<main class="container">
+		<div class="container__grid">
+			<section>
+				<p class="container__paragraph--category mb-3 text-sm">About</p>
+				<p class="container__paragraph">
+					<%-event.description.replaceAll("\n", "<br><br>")%>
+				</p>
+			</section>
+			<section>
+				<p class="container__paragraph--category">Location</p>
+				<p class="container__paragraph--content"><%=event.location%></p>
+
+				<p class="container__paragraph--category">Cost</p>
+				<p class="container__paragraph--content">$<%=event.cost%></p>
+
+				<p class="container__paragraph--category">Categories</p>
+				<p class="container__paragraph--content"><%=event.categories.join(", ")%></p>
+
+				<p class="container__paragraph--category">Type</p>
+				<p class="container__paragraph--content"><%=event.private?"Priate":"Public"%></p>
+				<p class="container__paragraph--category">Time</p>
+				<p class="container__paragraph--content">
+					<%=new Date(event.datetime).toLocaleString("en-US");%>
+				</p>
+
+				<p class="container__paragraph--category mb-3">Contact</p>
+				<% Object.keys(event.contact).forEach(c => { %>
+					<p class="container__paragraph--content mb-0"><%=c%>: <%=event.contact[c];%></p>
+				<% }); %>
+			</section>
+		</div>
+	</main>
+
+	<footer class="footer">
+		&copy; <%=new Date().getFullYear()%>. All rights reserved.
+		<a class="link" href="https://collaborate.smartlist.tech" target="_blank">Smartlist Events</a>
+	</footer>
+
+
+
+
+	<script>
+		function linkify(inputText) {
+		    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+		
+		    //URLs starting with http://, https://, or ftp://
+		    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+		    replacedText = inputText.replace(replacePattern1, '<a href="$1" class="link" target="_blank">$1</a>');
+		
+		    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+		    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+		    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" class="link" target="_blank">$2</a>');
+		
+		    //Change email addresses to mailto:: links.
+		    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+		    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1" class="link">$1</a>');
+		
+		    return replacedText;
+		}
+	
+		let main = document.querySelector('main');
+		main.innerHTML = linkify(main.innerHTML);
+
+		document.getElementById('signup-trigger').addEventListener('click', () => {
+			setTimeout(() => {
+				document.getElementById('name').focus()
+			}, 100)
+		})
+	</script>
+</body>
+</html>
+<% } %>

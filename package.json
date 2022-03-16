@@ -1,0 +1,30 @@
+{
+  "name": "edpoll-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-ejs-layouts": "^2.5.1",
+    "express-session": "^1.17.2",
+    "kutty": "^0.6.0",
+    "mongodb": "^4.4.1",
+    "mysql": "^2.18.1",
+    "postcss": "^8.4.8",
+    "socket.io": "^4.4.1",
+    "tailwindcss": "^3.0.23",
+    "ws": "^8.5.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/express-ejs-layouts": "^2.5.0",
+    "@types/express-session": "^1.17.4"
+  }
+}

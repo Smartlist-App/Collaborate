@@ -1,0 +1,123 @@
+<header
+  class="lg:flex lg:items-center lg:justify-between py-6 px-7 border-b sticky top-0 z-10 bg-white"
+>
+  <div class="flex-1 min-w-0">
+    <h2 class="text-2xl leading-7 text-gray-900 sm:text-3xl sm:truncate">
+      Event website
+    </h2>
+    <div
+      class="mt-1 flex flex-col sm:flex-row sm:flex-wrap sm:mt-0 sm:space-x-6"
+    >
+      <div class="mt-2 flex items-center text-gray-500">
+        <i class="material-icons mr-2">palette</i>
+        Modern
+      </div>
+      <div class="mt-2 flex items-center text-gray-500">
+        <!-- Heroicon name: solid/location-marker -->
+        <i class="material-icons mr-2">room</i>
+        <a class="underline" href="//test-event.manuthecoder.ml" target="_blank"
+          >test-event.manuthecoder.ml</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="mt-5 flex lg:mt-0 lg:ml-4">
+    <span class="hidden sm:block">
+      <button
+        type="button"
+        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-Amaranth-500 focus:border-Amaranth-500 ring-inset"
+      >
+        <i class="material-icons mr-2">delete</i>
+        Disable
+      </button>
+    </span>
+
+    <span class="hidden sm:block ml-3">
+      <a
+        target="_blank"
+        href="/events/<%=event._id%>"
+        class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-Amaranth-500 focus:border-Amaranth-500 ring-inset"
+      >
+        <i class="material-icons mr-2">open_in_new</i>
+        View
+      </a>
+    </span>
+
+    <span class="sm:ml-3">
+      <button
+        type="submit"
+        class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm font-medium text-white bg-Amaranth-600 hover:bg-Amaranth-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-Amaranth-500"
+      >
+        <i class="material-icons mr-2">check</i>
+        Publish
+      </button>
+    </span>
+
+    <!-- Dropdown -->
+    <span class="ml-3 relative sm:hidden">
+			<a
+				href="#"
+				class="block px-4 py-2 text-gray-700"
+				role="menuitem"
+				tabindex="-1"
+				id="mobile-menu-item-0"
+				>Edit</a
+			>
+			<a
+				href="#"
+				class="block px-4 py-2 text-gray-700"
+				role="menuitem"
+				tabindex="-1"
+				id="mobile-menu-item-1"
+				>View</a
+			>
+    </span>
+  </div>
+</header>
+
+<main class="mt-10 px-5">
+  <ol class="mb-5">
+    <li>
+      <h2 class="text-2xl" style="font-family: 'Inter'">Select a theme</h2>
+      <p class="text-gray-700 text-lg">
+        Select a look and feel for your website
+      </p>
+
+      <div class="overflow-x-scroll mt-5 whitespace-nowrap">
+        <section class="w-72 inline-block mr-2 mb-2">
+          <input id="_1" class="hidden" type="radio" name="radio" checked />
+          <label for="_1" class="checkbox--block">
+            <span class="checkbox-heading">Retro</span>
+            <img
+              src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg"
+              class="w-full mt-2 rounded-2xl"
+              draggable="false"
+            />
+          </label>
+        </section>
+        <section class="w-72 inline-block mr-2">
+          <input id="_2" class="hidden" type="radio" name="radio" />
+          <label for="_2" class="checkbox--block">
+            <span class="checkbox-heading">Modern</span>
+            <img
+              src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg"
+              class="w-full mt-2 rounded-2xl"
+              draggable="false"
+            />
+          </label>
+        </section>
+        <section class="w-72 inline-block mr-2">
+          <input id="_3" class="hidden" type="radio" name="radio" />
+          <label for="_3" class="checkbox--block">
+            <span class="checkbox-heading">Retro</span>
+            <img
+              src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg"
+              class="w-full mt-2 rounded-2xl"
+              draggable="false"
+            />
+          </label>
+        </section>
+      </div>
+    </li>
+  </ol>
+</main>

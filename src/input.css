@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .sidenav-item {
+    @apply rounded-r-full flex items-center h-[3.25rem] px-8 w-full hover:bg-gray-100 text-gray-700 text-[15px] ring-Amaranth-600 hover:text-black outline-none focus:bg-gray-100 gap-7;
+  }
+  .animation-scale {
+    animation: animation-scale 0.2s forwards;
+    transform-origin: top 10px;
+  }
+  .remove-btn {
+    @apply hover:bg-gray-100 cursor-pointer w-10 h-10 flex items-center rounded-full justify-center outline-none ring-gray-900;
+  }
+  .user {
+    @apply flex items-center gap-4 p-4 py-3 rounded-md mb-2 bg-gray-100;
+  }
+  .sidenav-item i {
+    @apply text-gray-500;
+  }
+  .sidenav-item:hover i {
+    @apply text-gray-900;
+  }
+  nav {
+    @apply items-center border-b px-3 h-16;
+  }
+  aside {
+    @apply w-[300px];
+  }
+  .menu-col {
+    @apply bg-gray-50 border border-gray-100 rounded-xl inline-block p-5 h-[calc(100vh-11rem)] overflow-y-scroll select-none mt-[5px];
+  }
+  .moreDetails:not(.active) {
+    @apply hidden;
+  }
+  .moreDetails.active {
+    /* 		@apply shadow-lg
+ */
+  }
+  .msg {
+    @apply px-5 py-3 hover:bg-gray-800 ;
+  }
+  .msg span {
+    @apply text-gray-300 hover:underline cursor-pointer select-none;
+  }
+  .nav-item {
+    @apply h-12 w-12 inline-flex items-center rounded-full justify-center mr-3 text-[16px] truncate text-ellipsis hover:bg-gray-100 focus:bg-gray-100 outline-none border border-transparent hover:border-gray-100  focus-within:border-gray-200 transition-all;
+  }
+  .subheader {
+    @apply text-sm text-gray-500 pl-7 my-2 flex select-none;
+  }
+  .event-container {
+    @apply w-11/12 mx-auto;
+  }
+  .badge {
+    @apply select-none py-2 px-4 text-sm font-thin;
+  }
+  .checkbox--block {
+    @apply flex flex-col rounded-2xl p-4 border-2 border-gray-200 cursor-pointer;
+  }
+  .title {
+    @apply text-xl mt-6 mx-4 mb-2 text-gray-900;
+    font-family: "Inter", sans-serif;
+  }
+	#chatSidenav {
+		right: -270px
+	}
+	nav.active {
+		@apply w-[calc(100vw-270px)]
+	}
+	#chatSidenav.active {
+		right: 0;
+	}
+}
+.spinner {
+  animation-duration: 0.6s;
+  /* 	animation-timing-function: linear
+ */
+}
+@keyframes animation-scale {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* The styling below is custom in that we require the :checked Pseudo class, which Tailwind doesn't offer out of the box. However the styling (border color and box shadow) the below applies is native Tailwind. */
+input:checked + label {
+  border-color: black;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
