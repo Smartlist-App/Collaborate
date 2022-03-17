@@ -137,6 +137,13 @@ io.on("connection", (socket: any) => {
     io.to(token).emit("add-menu-res", d);
   });
 
+	socket.on("delete-menu", async (id: string) => {
+    data.parent = new ObjectId(data.parent);
+		data.categories = data.categories.filter(String)
+    let res = await deleteEventData(id, "Food");
+    io.to(token).emit("delete-menu-res", d);
+  });
+
   socket.on("disconnect", () => {
     io.to(token).emit("chat-message", {
       user: {

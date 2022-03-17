@@ -80,16 +80,32 @@ function eventData(parent, table) {
     });
   });
 }
-function createEventData(data, table) {
+function createEventData(data2, table) {
   return new Promise((resolve, reject) => {
     import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
       if (err)
         throw err;
       var dbo = db.db("Events");
-      dbo.collection(table).insertOne(data, (err2, res) => {
+      dbo.collection(table).insertOne(data2, (err2, res) => {
         if (err2)
           throw err2;
         resolve(res);
+        db.close();
+      });
+    });
+  });
+}
+function deleteEventData(id, table) {
+  return new Promise((reject, resolve) => {
+    import_mongodb.MongoClient.connect(DATABASE_URL, function(err, db) {
+      if (err)
+        throw err;
+      let dbo = db.db("mydb");
+      let query = { id: new import_mongodb.ObjectId(id) };
+      dbo.collection("customers").deleteOne(query, (err2, obj) => {
+        if (err2)
+          throw err2;
+        resolve("1 document deleted");
         db.close();
       });
     });
@@ -113,17 +129,24 @@ io.use((socket, next) => sessionMiddleware(socket.request, {}, next));
 io.on("connection", (socket) => {
   socket.join(token);
   console.log("New user: " + socket.id);
-  socket.on("chat-message", (data) => {
-    io.to(token).emit("chat-message", data);
+  socket.on("chat-message", (data2) => {
+    io.to(token).emit("chat-message", data2);
   });
-  socket.on("add-menu", async (data) => {
-    data.parent = new import_mongodb.ObjectId(data.parent);
-    let res = await createEventData(data, "Food");
-    let d = __spreadProps(__spreadValues({}, data), {
+  socket.on("add-menu", async (data2) => {
+    data2.parent = new import_mongodb.ObjectId(data2.parent);
+    data2.categories = data2.categories.filter(String);
+    let res = await createEventData(data2, "Food");
+    let d2 = __spreadProps(__spreadValues({}, data2), {
       _id: res.insertedId.toString()
     });
-    console.log(d);
-    io.to(token).emit("add-menu-res", d);
+    console.log(d2);
+    io.to(token).emit("add-menu-res", d2);
+  });
+  socket.on("delete-menu", async (id) => {
+    data.parent = new import_mongodb.ObjectId(data.parent);
+    data.categories = data.categories.filter(String);
+    let res = await deleteEventData(id, "Food");
+    io.to(token).emit("delete-menu-res", d);
   });
   socket.on("disconnect", () => {
     io.to(token).emit("chat-message", {

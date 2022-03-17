@@ -2,13 +2,7 @@ const _root = document.getElementById("_root");
 const socket = io();
 const server = {
   addData(key, value) {
-    return new Promise((reject, resolve) => {
-      socket.emit(`add-${key}`, value);
-      socket.on(`add-${key}-res`, (res) => {
-        resolve(res);
-        socket.off(`add-${key}-res`);
-      });
-    });
+    socket.emit(`add-${key}`, value);
   }
 };
 window.onerror = (err) => alert(err);
@@ -65,6 +59,7 @@ document.getElementById("chatTrigger").addEventListener("click", () => {
 window.chatCooldown = false;
 document.getElementById("chatInput").addEventListener("keyup", (e) => {
   if (e.code === "Enter") {
+    document.getElementById("chatTriggerIcon").innerHTML = "chat_bubble_outline";
     let msg = document.getElementById("chatInput").value;
     if (msg.trim() == "")
       return;
@@ -81,8 +76,7 @@ document.getElementById("chatInput").addEventListener("keyup", (e) => {
   }
 });
 socket.on("chat-message", (e) => {
-  if (e.event !== EVENT_ID)
-    return;
+  document.getElementById("chatTriggerIcon").innerHTML = "mark_chat_unread";
   let container = document.getElementById("chatContainer");
   let message = document.createElement("SECTION");
   let audio = document.createElement("AUDIO");
