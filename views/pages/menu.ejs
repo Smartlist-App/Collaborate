@@ -116,6 +116,7 @@
 				parent: EVENT_ID,
 				type: document.getElementById('select').value
 		});
+		document.getElementById('menuForm').reset();
 	})
 
 	function deleteMenuItem(id, el) {
@@ -128,5 +129,7 @@
 		let i = document.querySelector(`[data-meal-id="${e}"]`);
 		i && i.remove();
 	})
-	socket.on("add-menu-res", (e) => addMenuItems(e.type, [e]))
+	socket.on("add-menu-res", (e) => {
+		addMenuItems(e.type, [e])
+	})
 </script>
