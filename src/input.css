@@ -11,11 +11,15 @@
     transform-origin: top 10px;
   }
 	.input  {
-		@apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 dark:bg-gray-600 dark:text-gray-200 dark:focus:bg-transparent dark:focus:border-white dark:placeholder-gray-200
+		@apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 dark:bg-gray-600 dark:text-gray-200 dark:focus:bg-transparent dark:focus:border-gray-200 dark:placeholder-gray-200
 	}
 	option:hover {
 		background: #aaa
 	}
+option {
+	background: #37474f;
+	color: #fff;
+}
   .remove-btn {
     @apply hover:bg-gray-100 cursor-pointer w-10 h-10 flex items-center rounded-full justify-center outline-none ring-gray-900;
   }
@@ -35,7 +39,7 @@
     @apply w-[300px];
   }
   .menu-col {
-    @apply bg-gray-50 border border-gray-100 rounded-xl inline-block p-5 h-[calc(100vh-11rem)] overflow-y-scroll select-none mt-[5px] dark:bg-gray-800 dark:border-gray-700;
+    @apply bg-gray-50 border border-gray-100 rounded-xl mr-2 inline-block p-5 h-[calc(100vh-11rem)] overflow-y-scroll select-none mt-[5px] dark:bg-gray-800 dark:border-gray-700 w-[300px];
   }
   .moreDetails:not(.active) {
     @apply hidden

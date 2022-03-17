@@ -1,7 +1,14 @@
-window.onerror = (err) => alert(err);
-
-const socket = io();
 const _root = document.getElementById('_root');
+const socket = io();
+
+const server = {
+	addData(key, value) {
+		socket.emit(`add-${key}`, value)
+	}
+}
+
+window.onerror = err => alert(err);
+
 
 function insertHTML(html, dest, append=false){
     // if no append is requested, clear the target element

@@ -1251,6 +1251,11 @@ option:hover {
   background: #aaa
 }
 
+option {
+  background: #37474f;
+  color: #fff;
+}
+
 .remove-btn {
   display: flex;
   height: 2.5rem;
@@ -1334,9 +1339,11 @@ aside {
 }
 
 .menu-col {
+  margin-right: 0.5rem;
   margin-top: 5px;
   display: inline-block;
   height: calc(100vh - 11rem);
+  width: 300px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -1525,12 +1532,18 @@ aside {
 }
 
 #chatSidenav {
-  right: -270px;
+  right: -100vw;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   #chatSidenav {
-    right: -100vw;
+    right: -270px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #chatSidenav {
+    right: -270px;
   }
 }
 
@@ -2359,6 +2372,11 @@ nav.active {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
+.text-green-700 {
+  --tw-text-opacity: 1;
+  color: rgb(21 128 61 / var(--tw-text-opacity));
+}
+
 .text-gray-600 {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
@@ -2763,14 +2781,19 @@ input:checked + label {
     color: rgb(229 231 235 / var(--tw-text-opacity));
   }
 
+  .dark\:text-gray-100 {
+    --tw-text-opacity: 1;
+    color: rgb(243 244 246 / var(--tw-text-opacity));
+  }
+
   .dark\:text-gray-300 {
     --tw-text-opacity: 1;
     color: rgb(209 213 219 / var(--tw-text-opacity));
   }
 
-  .dark\:text-gray-100 {
+  .dark\:text-green-200 {
     --tw-text-opacity: 1;
-    color: rgb(243 244 246 / var(--tw-text-opacity));
+    color: rgb(187 247 208 / var(--tw-text-opacity));
   }
 
   .dark\:placeholder-teal-400::-moz-placeholder {
@@ -2914,12 +2937,6 @@ input:checked + label {
     font-size: 1.875rem;
     line-height: 2.25rem;
   }
-
-  .sm\:transition-all {
-    transition-property: all;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-    transition-duration: 150ms;
-  }
 }
 
 @media (min-width: 768px) {
@@ -2954,6 +2971,10 @@ input:checked + label {
   .md\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
+  }
+
+  .md\:transition-none {
+    transition-property: none;
   }
 }
 
@@ -3019,5 +3040,9 @@ input:checked + label {
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:transition-none {
+    transition-property: none;
   }
 }

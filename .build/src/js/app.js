@@ -1,6 +1,17 @@
-window.onerror = (err) => alert(err);
-const socket = io();
 const _root = document.getElementById("_root");
+const socket = io();
+const server = {
+  addData(key, value) {
+    return new Promise((reject, resolve) => {
+      socket.emit(`add-${key}`, value);
+      socket.on(`add-${key}-res`, (res) => {
+        resolve(res);
+        socket.off(`add-${key}-res`);
+      });
+    });
+  }
+};
+window.onerror = (err) => alert(err);
 function insertHTML(html, dest, append = false) {
   if (!append)
     dest.innerHTML = "";
@@ -48,6 +59,8 @@ document.getElementById("chatTrigger").addEventListener("click", () => {
   document.getElementById("nav").classList.toggle("active");
   document.getElementById("chatInput").focus();
   document.body.classList.toggle("pr-[270px]");
+  if (window.innerWidth < 640)
+    document.body.classList.toggle("pr-[270px]");
 });
 window.chatCooldown = false;
 document.getElementById("chatInput").addEventListener("keyup", (e) => {

@@ -3,58 +3,69 @@
 <div x-data="dialog()">
   <button x-spread="trigger" class="hidden" id="MenuTrigger"></button>
   <div class="backdrop-blur-lg dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
-    <form class="block overflow-y-scroll dark:bg-gray-700 dialog-content px-[30px] py-[20px] rounded-[28px]">
+    <form id="menuForm" class="block overflow-y-scroll dark:bg-gray-700 dialog-content px-[30px] py-[20px] rounded-[28px]" @submit="close">
 			<div class="text-xl border-0 my-3">Create meal</div>
 
 				<label class="block mb-3">
 					<span class="text-gray-700 dark:text-gray-200">Meal name</span>
-					<input type="text" class="input" id="mealName" placeholder="Sandwiches" />
+					<input required id="menuName" type="text" class="input" id="mealName" placeholder="Sandwiches" />
 				</label>
 				<div class="grid grid-cols-2 gap-2">
 					<label class="block mb-3">
-						<span class="text-gray-700 dark:text-gray-200">Expenditure</span>
-						<input type="number" class="input" placeholder="$15" />
+						<span min="0" class="text-gray-700 dark:text-gray-200">Expenditure</span>
+						<input required id="menuExpenses" type="number" class="input" placeholder="$15" />
 					</label>
 					<label class="block mb-3">
 						<span class="text-gray-700 dark:text-gray-200">Revenue (Money earned)</span>
-						<input type="number" class="input" placeholder="$1" />
+						<input min="0" required id="menuRevenue" type="number" class="input" placeholder="$1" />
 					</label>
 				</div>
 				<div class="grid grid-cols-2 gap-2">
 				<label class="block mb-3">
 					<span class="text-gray-700 dark:text-gray-200">Categories</span>
-					<input type="text" class="input" placeholder="Vegetarian, Gluten-Free, Nut-Free" />
+					<input id="menuCategories" type="text" class="input" placeholder="Vegetarian, Gluten-Free, Nut-Free" />
 				</label>
 					<label class="block mb-3">
 					<span class="text-gray-700 dark:text-gray-200">Type</span>
-					<select type="text" class="input wide" id="select">
-						<option>Starter</option>
-						<option>Entrée</option>
-						<option>Drinks</option>
-						<option>Dessert</option>
-						<option>Other</option>
+					<select required type="text" class="input wide" id="select">
+						<option id="optionStarter">Starter</option>
+						<option id="optionEntrée">Entrée</option>
+						<option id="optionDrinks">Drinks</option>
+						<option id="optionDessert">Dessert</option>
+						<option id="optionOther">Other</option>
 					</select>
 	
 				</label>
 				</div>
 					
 			
-			<button type="button" class="dark:bg-gray-600 dark:text-white float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 material-ripple focus:ring-0 rounded-full px-6 py-3">Create</button>
+			<button type="submit" class="dark:bg-gray-600 dark:text-white float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 material-ripple focus:ring-0 rounded-full px-6 py-3">Create</button>
 			</form>
   </div>
 </div>
 
-<main class="p-3 flex gap-2" id="menu"></main>
+<main class="p-3 whitespace-nowrap overflow-x-auto" id="menu"></main>
 <script>
 	var res = <%-JSON.stringify(data)%>
 	res = res.groupBy( ({ type }) => type );
 	function addMenuItems(category, data) {
 		data.forEach(item => {
-			let container = document.querySelector(`[data-col="${category}"]`)
+			if(!document.querySelector(`[data-col="${category}"]`)) {
+				let col = document.createElement("SECTION");
+				col.classList.add("menu-col");
+				col.setAttribute('data-col', category)
+				col.innerHTML = `
+					<h3 class="text-xl my-2 text-gray-800 dark:text-gray-100">${category}</h3>
+					<button class="px-4 py-3 rounded-2xl bg-gray-100 text-sm w-full hover:bg-gray-200 flex gap-3 focus:bg-gray-200 dark:focus:bg-gray-500 text-gray-800 outline-none items-center material-ripple transition-all dark:hover:bg-gray-500 dark:bg-gray-600 dark:text-white" onclick="addMenuItem('${category}')"><i class="material-icons">add</i>New</button>
+					<div class="items"></div>`;
+				document.getElementById("menu").appendChild(col);
+			}
+			let container = document.querySelector(`[data-col="${category}"]`);
+			
 			let containerItem = document.createElement('DIV');
 			containerItem.innerHTML = `
 			<div class="px-5 py-4"><span class="dark:text-gray-200 text-gray-700 my-2">${item.name}</span>
-			<br>${item.categories.map(d => `<div class="badge bg-[rgba(0,0,0,0.1)] text-gray-700 dark:text-gray-300 m-1 ml-0 text-xs px-2 py-1">${d}</div>`).join('')}
+			<br>${item.categories.filter(String).map(d => `<div class="badge bg-[rgba(0,0,0,0.1)] text-gray-700 dark:text-gray-300 m-1 ml-0 text-xs px-2 py-1">${d}</div>`).join('')}
 		</div>
 
 			<div class="p-1 pt-0 moreDetails"><div class="px-4 pt-3 bg-[rgba(0,0,0,.05)] grid grid-cols-2 p-2 rounded-2xl">
@@ -67,6 +78,7 @@
 					<span class="flex text-sm">Revenue</span>
 					<span class="text-md text-gray-700 dark:text-gray-200">\$${item.price}</span>
 				</div>
+			<a href="javascript:void(0)" onclick="deleteMenu(this.getAttribute('data-id'))" data-id="${item._id}" class="text-green-700 dark:text-green-200">Delete</a>
 			</div>
 
 		</div>
@@ -83,19 +95,26 @@
 		})
 	}
 	Object.keys(res).forEach(category => {
-		let col = document.createElement("SECTION");
-		col.classList.add("menu-col");
-		col.setAttribute('data-col', category)
-		col.innerHTML = `
-			<h3 class="text-xl my-2 text-gray-800 dark:text-gray-100">${category}</h3>
-			<button class="px-4 py-3 rounded-2xl bg-gray-100 text-sm w-full hover:bg-gray-200 flex gap-3 focus:bg-gray-200 dark:focus:bg-gray-500 text-gray-800 outline-none items-center material-ripple transition-all dark:hover:bg-gray-500 dark:bg-gray-600 dark:text-white" onclick="addMenuItem()"><i class="material-icons">add</i>New</button>
-			<div class="items"></div>`;
-		document.getElementById("menu").appendChild(col);
-
 		addMenuItems(category, res[category])
 	});
-	function addMenuItem() {
+	function addMenuItem(option) {
+		document.getElementById('option'+option).selected = true
 		document.getElementById('MenuTrigger').click();
-		setTimeout(() => document.getElementById('mealName').focus(), 20);
+		setTimeout(() => document.getElementById('menuName').focus(), 20);
 	}
+	document.getElementById('menuForm').addEventListener('submit', (e) => {
+		e.preventDefault();
+		server.addData("menu", {
+				name: document.getElementById('menuName').value,
+				price: document.getElementById('menuExpenses').value,
+				cost: document.getElementById('menuRevenue').value,
+				categories: document.getElementById('menuCategories').value .split(",").filter(String),
+				parent: EVENT_ID,
+				type: document.getElementById('select').value
+		});
+	})
+
+	socket.on("add-menu-res", (e) => {
+		addMenuItems(e.type, [e])
+	})
 </script>

@@ -1,9 +1,26 @@
 var __create = Object.create;
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropNames = Object.getOwnPropertyNames;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var __markAsModule = (target) => __defProp(target, "__esModule", { value: true });
 var __reExport = (target, module2, desc) => {
   if (module2 && typeof module2 === "object" || typeof module2 === "function") {
@@ -47,7 +64,7 @@ function eventInfo(id, req) {
     });
   });
 }
-function eventData(parent, req, table) {
+function eventData(parent, table) {
   return new Promise((resolve, reject) => {
     import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
       if (err)
@@ -63,16 +80,16 @@ function eventData(parent, req, table) {
     });
   });
 }
-function createEventData(data, req, table) {
+function createEventData(data, table) {
   return new Promise((resolve, reject) => {
-    import_mongodb.MongoClient.connect(DATABASE_URL, function(err, db) {
+    import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
       if (err)
         throw err;
       var dbo = db.db("Events");
       dbo.collection(table).insertOne(data, (err2, res) => {
         if (err2)
           throw err2;
-        resolve("1 document inserted");
+        resolve(res);
         db.close();
       });
     });
@@ -94,13 +111,22 @@ const sessionMiddleware = (0, import_express_session.default)({
 app.use(sessionMiddleware);
 io.use((socket, next) => sessionMiddleware(socket.request, {}, next));
 io.on("connection", (socket) => {
-  console.log("a user connected");
+  socket.join(token);
+  console.log("New user: " + socket.id);
   socket.on("chat-message", (data) => {
-    console.log(data);
-    io.emit("chat-message", data);
+    io.to(token).emit("chat-message", data);
+  });
+  socket.on("add-menu", async (data) => {
+    data.parent = new import_mongodb.ObjectId(data.parent);
+    let res = await createEventData(data, "Food");
+    let d = __spreadProps(__spreadValues({}, data), {
+      _id: res.insertedId.toString()
+    });
+    console.log(d);
+    io.to(token).emit("add-menu-res", d);
   });
   socket.on("disconnect", () => {
-    io.emit("chat-message", {
+    io.to(token).emit("chat-message", {
       user: {
         name: "Manu",
         email: "manuthecoder@protonmail.com",
@@ -135,13 +161,13 @@ app.get("/pages/overview", async (req, res) => {
 });
 app.get("/pages/menu", async (req, res) => {
   res.render("pages/menu", {
-    data: await eventData(token, req, "Food"),
+    data: await eventData(token, "Food"),
     layout: false
   });
 });
 app.get("/pages/attendees", async (req, res) => {
   res.render("pages/attendees", {
-    data: await eventData(token, req, "Attendees"),
+    data: await eventData(token, "Attendees"),
     layout: false
   });
 });
@@ -153,5 +179,10 @@ app.get("/dist/build.css", (req, res) => {
   res.sendFile("/home/runner/Events5/dist/output.css");
 });
 const port = process.env.PORT ?? 443;
-server.listen(port, () => console.log("server listening on port " + port));
+server.listen(port, () => console.log({
+  message: "Smartlist collaborate is UP",
+  product: "Smartlist Collaborate",
+  status: "UP",
+  timestamp: new Date()
+}));
 //# sourceMappingURL=index.js.map
