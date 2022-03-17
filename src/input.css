@@ -70,7 +70,7 @@
     @apply flex flex-col rounded-2xl p-4 border-2 border-gray-200 cursor-pointer;
   }
   .title {
-    @apply text-xl mt-6 mx-4 mb-2 text-gray-900;
+    @apply text-xl mt-6 mx-4 mb-2 text-gray-900 dark:text-gray-300;
     font-family: "Inter", sans-serif;
   }
 	#chatSidenav {
@@ -81,6 +81,12 @@
 	}
 	#chatSidenav.active {
 		right: 0;
+	}
+	.table-col {
+		@apply py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400
+	}
+	.table-td {
+		@apply py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400
 	}
 }
 .spinner {

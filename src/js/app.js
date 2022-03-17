@@ -61,7 +61,8 @@ getHashPage(false);
 window.addEventListener("hashchange", getHashPage)
 
 document.getElementById('chatTrigger').addEventListener('click', () => {
-	document.getElementById('chatSidenav').classList.toggle('active');
+		document.getElementById('chatTriggerIcon').innerHTML = 'chat_bubble_outline'
+document.getElementById('chatSidenav').classList.toggle('active');
 	document.getElementById('nav').classList.toggle('active');
 	document.getElementById('chatInput').focus();
 	document.body.classList.toggle("pr-[270px]")
