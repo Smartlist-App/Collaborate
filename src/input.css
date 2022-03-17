@@ -16,10 +16,10 @@
 	option:hover {
 		background: #aaa
 	}
-option {
-	background: #37474f;
-	color: #fff;
-}
+	option {
+		background: #37474f;
+		color: #fff;
+	}
   .remove-btn {
     @apply hover:bg-gray-100 cursor-pointer w-10 h-10 flex items-center rounded-full justify-center outline-none ring-gray-900;
   }
