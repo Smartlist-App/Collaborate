@@ -196,6 +196,24 @@ app.get("/pages/attendees", async (req, res) => {
     layout: false
   });
 });
+app.get("/pages/lists", async (req, res) => {
+  res.render("pages/lists", {
+    data: await eventData(token, "Lists"),
+    layout: false
+  });
+});
+app.get("/pages/items", async (req, res) => {
+  res.render("pages/items", {
+    data: await eventData(token, "Items"),
+    layout: false
+  });
+});
+app.get("/pages/outline", async (req, res) => {
+  res.render("pages/outline", {
+    data: await eventData(token, "Outline"),
+    layout: false
+  });
+});
 app.use(import_express.default.static("src"));
 app.get("/js/app.js", (req, res) => {
   res.sendFile(__dirname + "/src/js/app.js");
