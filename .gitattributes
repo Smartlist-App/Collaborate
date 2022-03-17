@@ -4,4 +4,4 @@
 *.js linguist-vendored=false
 *.json linguist-vendored=false
 
-.build/* linguist-vendored
+.build/** linguist-vendored
