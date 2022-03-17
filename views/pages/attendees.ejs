@@ -1,5 +1,17 @@
 <h1 class="title">Attendees</h1>
 
+<div x-data="dialog()">
+  <a class="hidden" x-spread="trigger" id="AttributesTrigger"></a>
+  <div class="backdrop-blur-lg dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
+    <div class="dialog-content">
+			<div class="text-xl border-0 my-3">Attributes</div>
+			<div id="Attributes"></div>
+			<br>
+			<button type="submit" x-spread="close" class="modal-btn material-ripple">Done</button>
+    </div>
+  </div>
+</div>
+
 <div class="flex flex-col p-4">
   <div class="flex mb-3 items-center">
     <label for="table-search" class="sr-only">Search</label>
@@ -46,140 +58,17 @@
                 scope="col"
                 class="table-col"
               >
-                RSVP
+                Phone
               </th>
               <th scope="col" class="relative py-3 px-6">
                 <span class="sr-only">Edit</span>
               </th>
             </tr>
           </thead>
-          <tbody>
-            <!-- Product 1 -->
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td
-                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                MrBeast
-              </td>
-              <td
-                class="table-td"
-              >
-                manuthecoder@protonmail.com
-              </td>
-              <td
-                class="table-td"
-              >
-                Yes
-              </td>
-              <td
-                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap"
-              >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2"
-                  >Attributes</a
-                >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline"
-                  >Delete</a
-                >
-              </td>
-            </tr>
-            <!-- Product 2 -->
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td
-                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Jeff Bezos
-              </td>
-              <td
-                class="table-td"
-              >
-                jeffbezos@amazon.com
-              </td>
-              <td
-                class="table-td"
-              >
-                Yes
-              </td>
-              <td
-                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap"
-              >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2"
-                  >Attributes</a
-                >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline"
-                  >Delete</a
-                >
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-              <td
-                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Ur mom
-              </td>
-              <td
-                class="table-td"
-              >
-                urmom@gmail.com
-              </td>
-              <td
-                class="table-td"
-              >
-                No
-              </td>
-              <td
-                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap"
-              >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2"
-                  >Attributes</a
-                >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline"
-                  >Delete</a
-                >
-              </td>
-            </tr>
-            <tr class="bg-white dark:bg-gray-800">
-              <td
-                class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                Rick Astley
-              </td>
-              <td
-                class="table-td"
-              >
-                manuthecoder@protonmail.com
-              </td>
-              <td
-                class="table-td"
-              >
-                Yes
-              </td>
-              <td
-                class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap"
-              >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2"
-                  >Attributes</a
-                >
-                <a
-                  href="#"
-                  class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline"
-                  >Delete</a
-                >
-              </td>
-            </tr>
+          <tbody id="users">
+						<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+							<td class="table-td text-center" colspan="4"><span class="text-lg my-3 inline-block dark:text-white text-black">No attendees yet!</span><br>Gain attendees from publishing your event page, or manually creating users</td>
+						</tr>
           </tbody>
         </table>
       </div>
@@ -187,5 +76,39 @@
   </div>
 </div>
 
-
-<%=JSON.stringify(data)%>
+<script>
+	function viewAttributes(data) {
+		setTimeout(() => {
+			document.getElementById('AttributesTrigger').click();
+			document.getElementById('Attributes').innerHTML = `
+${Object.keys(data).map(attr => {
+	return `
+<p>${attr}</p>
+<p class="mb-4 text-gray-600 dark:text-gray-300">${data[attr]}</p>
+`;
+}).join('')}
+`;
+		}, 20);
+	}
+	
+	var users = <%-JSON.stringify(data)%>;
+	document.getElementById('users').innerHTML = "";
+	users.forEach(user => {
+		let row = document.createElement("TR");
+		row.classList.add('table-tr')
+		row.innerHTML += `
+				<td class="table-td-header">${user.name}</td>
+				<td class="table-td"><a href="mailto:${user.email}" target="_blank" class="hover:underline">${user.email}</a></td>
+				<td class="table-td"><a href="tel:${user.email}" target="_blank" class="hover:underline">${user.phone}</a></td>
+				<td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
+					<a data-attr="${user._id}" href="javascript:void(0)" class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2">Attributes</a>
+					<a href="javascript:void(0)" class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline">Delete</a>
+				</td>
+ `;
+		document.getElementById('users').appendChild(row)
+		document.querySelector(`[data-attr="${user._id}"]`).addEventListener("click", () => {
+			viewAttributes(user.attributes)
+		})
+	})
+	
+</script>

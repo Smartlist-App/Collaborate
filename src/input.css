@@ -85,9 +85,21 @@
 	.table-col {
 		@apply py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400
 	}
+	.dialog-content {
+		@apply block overflow-y-scroll dark:bg-gray-700 px-[30px] py-[20px] rounded-[28px]
+	}
+	.modal-btn {
+		@apply dark:bg-gray-600 dark:text-white float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 focus:ring-0 rounded-full px-6 py-3
+	}
 	.table-td {
 		@apply py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400
 	}
+.table-tr {
+	@apply bg-white border-b dark:bg-gray-800 dark:border-gray-700
+}
+		.table-td-header {
+			@apply py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white
+		}
 }
 .spinner {
   animation-duration: 0.6s;
