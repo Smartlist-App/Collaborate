@@ -2,31 +2,31 @@
 
 <div x-data="dialog()">
   <button x-spread="trigger" class="hidden" id="MenuTrigger"></button>
-  <div class="dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
-    <div class="block dialog-content px-[30px] py-[20px] rounded-[28px]">
-			<div class="text-xl border-0 my-3">Create item</div>
+  <div class="backdrop-blur-lg dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
+    <form class="block overflow-y-scroll dark:bg-gray-700 dialog-content px-[30px] py-[20px] rounded-[28px]">
+			<div class="text-xl border-0 my-3">Create meal</div>
 
 				<label class="block mb-3">
-					<span class="text-gray-700">Food</span>
-					<input type="text" class="input" placeholder="Sandwiches" />
+					<span class="text-gray-700 dark:text-gray-200">Meal name</span>
+					<input type="text" class="input" id="mealName" placeholder="Sandwiches" />
 				</label>
 				<div class="grid grid-cols-2 gap-2">
 					<label class="block mb-3">
-						<span class="text-gray-700">Cost to buy</span>
-						<input type="number" class="input" placeholder="100" />
+						<span class="text-gray-700 dark:text-gray-200">Expenditure</span>
+						<input type="number" class="input" placeholder="$15" />
 					</label>
 					<label class="block mb-3">
-						<span class="text-gray-700">Sell value</span>
-						<input type="number" class="input" placeholder="0" />
+						<span class="text-gray-700 dark:text-gray-200">Revenue (Money earned)</span>
+						<input type="number" class="input" placeholder="$1" />
 					</label>
 				</div>
 				<div class="grid grid-cols-2 gap-2">
 				<label class="block mb-3">
-					<span class="text-gray-700">Categories</span>
+					<span class="text-gray-700 dark:text-gray-200">Categories</span>
 					<input type="text" class="input" placeholder="Vegetarian, Gluten-Free, Nut-Free" />
 				</label>
 					<label class="block mb-3">
-					<span class="text-gray-700">Type</span>
+					<span class="text-gray-700 dark:text-gray-200">Type</span>
 					<select type="text" class="input wide" id="select">
 						<option>Starter</option>
 						<option>Entrée</option>
@@ -39,8 +39,8 @@
 				</div>
 					
 			
-			<button type="button" class="float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 material-ripple focus:ring-0 rounded-full px-6 py-3">Create</button>
-				</div>
+			<button type="button" class="dark:bg-gray-600 dark:text-white float-right mt-3 mb-0 btn bg-gray-200 text-gray-900 material-ripple focus:ring-0 rounded-full px-6 py-3">Create</button>
+			</form>
   </div>
 </div>
 
@@ -53,25 +53,25 @@
 			let container = document.querySelector(`[data-col="${category}"]`)
 			let containerItem = document.createElement('DIV');
 			containerItem.innerHTML = `
-			<div class="px-5 py-4"><span class="text-gray-700 my-2">${item.name}</span>
-			<br>${item.categories.map(d => `<div class="badge bg-[rgba(0,0,0,0.1)] text-gray-700 m-1 ml-0 text-xs px-2 py-1">${d}</div>`).join('')}
+			<div class="px-5 py-4"><span class="dark:text-gray-200 text-gray-700 my-2">${item.name}</span>
+			<br>${item.categories.map(d => `<div class="badge bg-[rgba(0,0,0,0.1)] text-gray-700 dark:text-gray-300 m-1 ml-0 text-xs px-2 py-1">${d}</div>`).join('')}
 		</div>
 
 			<div class="p-1 pt-0 moreDetails"><div class="px-4 pt-3 bg-[rgba(0,0,0,.05)] grid grid-cols-2 p-2 rounded-2xl">
 
 				<div class="my-1">
 					<span class="flex text-sm">Cost</span>
-					<span class="text-md text-gray-700">\$${item.cost}</span>
+					<span class="text-md text-gray-700 dark:text-gray-200">\$${item.cost}</span>
 				</div>
 				<div class="my-1">
 					<span class="flex text-sm">Revenue</span>
-					<span class="text-md text-gray-700">\$${item.price}</span>
+					<span class="text-md text-gray-700 dark:text-gray-200">\$${item.price}</span>
 				</div>
 			</div>
 
 		</div>
 			`
-			containerItem.setAttribute('class', 'cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-2xl my-2')
+			containerItem.setAttribute('class', 'cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-2xl my-2 dark:bg-gray-600 dark:hover:bg-gray-500')
 			container.appendChild(containerItem);
 			containerItem.addEventListener('click', () => {
 				if(document.querySelector('.moreDetails.active')) {
@@ -87,8 +87,8 @@
 		col.classList.add("menu-col");
 		col.setAttribute('data-col', category)
 		col.innerHTML = `
-			<h3 class="text-xl my-2 text-gray-800">${category}</h3>
-			<button class="px-4 py-3 rounded-2xl bg-gray-100 text-sm w-full hover:bg-gray-200 flex gap-3 focus:bg-gray-200 text-gray-800 outline-none items-center material-ripple transition-all" onclick="addMenuItem()"><i class="material-icons">add</i>New</button>
+			<h3 class="text-xl my-2 text-gray-800 dark:text-gray-100">${category}</h3>
+			<button class="px-4 py-3 rounded-2xl bg-gray-100 text-sm w-full hover:bg-gray-200 flex gap-3 focus:bg-gray-200 dark:focus:bg-gray-500 text-gray-800 outline-none items-center material-ripple transition-all dark:hover:bg-gray-500 dark:bg-gray-600 dark:text-white" onclick="addMenuItem()"><i class="material-icons">add</i>New</button>
 			<div class="items"></div>`;
 		document.getElementById("menu").appendChild(col);
 
@@ -96,5 +96,6 @@
 	});
 	function addMenuItem() {
 		document.getElementById('MenuTrigger').click();
+		setTimeout(() => document.getElementById('mealName').focus(), 20);
 	}
 </script>

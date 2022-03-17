@@ -1,7 +1,6 @@
 window.onerror = (err) => alert(err);
 
 const socket = io();
-
 const _root = document.getElementById('_root');
 
 function insertHTML(html, dest, append=false){
@@ -59,4 +58,46 @@ document.getElementById('chatTrigger').addEventListener('click', () => {
 	document.getElementById('nav').classList.toggle('active');
 	document.getElementById('chatInput').focus();
 	document.body.classList.toggle("pr-[270px]")
+	if(window.innerWidth < 640) document.body.classList.toggle("pr-[270px]")
+})
+window.chatCooldown = false;
+document.getElementById('chatInput').addEventListener('keyup', (e) => {
+	if(e.code === "Enter") {
+		let msg = document.getElementById('chatInput').value;
+		if(msg.trim() == "") return;
+		if(window.chatCooldown) return;
+		
+		window.chatCooldown = true
+		setTimeout(() => window.chatCooldown = false, 400)
+		
+		socket.emit('chat-message', {
+			user: ACCOUNT_INFO,
+			event: EVENT_ID,
+			msg: msg
+		})
+		document.getElementById('chatInput').value = "";
+	}
+})
+
+socket.on('chat-message', (e) => {
+	if(e.event !== EVENT_ID) return;
+	let container = document.getElementById('chatContainer')
+	let message = document.createElement('SECTION');
+	let audio = document.createElement('AUDIO');
+	audio.src = 'https://padlet-uploads.storage.googleapis.com/446844750/5fda30d0eed3d079e360e9cd64f44852/among_us_chat_sound.mp3';
+	audio.addEventListener('ended', () => audio.remove())
+	audio.play()
+	message.classList.add('msg');
+	message.innerHTML = `${e.short?'':`<span>${e.user.name}</span><br />`}${e.short ? `<i>${e.msg}</i>`:e.msg}`
+	container.appendChild(message)
+	container.scrollTop = container.scrollHeight;
+})
+
+window.addEventListener('load', () => {
+	socket.emit('chat-message', {
+		user: ACCOUNT_INFO,
+		event: EVENT_ID,
+		msg: ACCOUNT_INFO.name + " has joined the event",
+		short: true
+	})
 })

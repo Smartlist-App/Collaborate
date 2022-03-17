@@ -96,7 +96,20 @@ io.use((socket, next) => sessionMiddleware(socket.request, {}, next));
 io.on("connection", (socket) => {
   console.log("a user connected");
   socket.on("chat-message", (data) => {
+    console.log(data);
     io.emit("chat-message", data);
+  });
+  socket.on("disconnect", () => {
+    io.emit("chat-message", {
+      user: {
+        name: "Manu",
+        email: "manuthecoder@protonmail.com",
+        image: "https://replit.com/cdn-cgi/image/width=1920,quality=80/https://storage.googleapis.com/replit/images/1615307601188_444d33267b0ab288b076f21da2abafc2.jpeg"
+      },
+      event: "6227ea2c7aabff48117758b7",
+      msg: "Manu has left the event",
+      short: true
+    });
   });
 });
 app.use(async (req, res, next) => {

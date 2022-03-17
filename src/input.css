@@ -4,14 +4,14 @@
 
 @layer components {
   .sidenav-item {
-    @apply rounded-r-full flex items-center h-[3.25rem] px-8 w-full hover:bg-gray-100 text-gray-700 text-[15px] ring-Amaranth-600 hover:text-black outline-none focus:bg-gray-100 gap-7;
+    @apply rounded-r-full flex items-center h-[3.25rem] px-8 w-full hover:bg-gray-100 text-gray-700 text-[15px] ring-Amaranth-600 hover:text-black outline-none focus:bg-gray-100 gap-7 dark:hover:bg-gray-800 dark:focus:bg-gray-800 dark:text-gray-100 dark:hover:text-white;
   }
   .animation-scale {
     animation: animation-scale 0.2s forwards;
     transform-origin: top 10px;
   }
 	.input  {
-		@apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0
+		@apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 dark:bg-gray-600 dark:text-gray-200 dark:focus:bg-transparent dark:focus:border-white dark:placeholder-gray-200
 	}
 	option:hover {
 		background: #aaa
@@ -20,38 +20,38 @@
     @apply hover:bg-gray-100 cursor-pointer w-10 h-10 flex items-center rounded-full justify-center outline-none ring-gray-900;
   }
   .user {
-    @apply flex items-center gap-4 p-4 py-3 rounded-md mb-2 bg-gray-100;
+    @apply flex items-center gap-4 p-4 py-3 rounded-md mb-2 bg-gray-100 dark:bg-gray-600;
   }
   .sidenav-item i {
-    @apply text-gray-500;
+    @apply text-gray-500 dark:text-gray-300;
   }
   .sidenav-item:hover i {
-    @apply text-gray-900;
+    @apply text-gray-900 dark:text-white;
   }
   nav {
-    @apply items-center border-b px-3 h-16;
+    @apply items-center border-b px-3 h-16 dark:border-gray-800;
   }
   aside {
     @apply w-[300px];
   }
   .menu-col {
-    @apply bg-gray-50 border border-gray-100 rounded-xl inline-block p-5 h-[calc(100vh-11rem)] overflow-y-scroll select-none mt-[5px];
+    @apply bg-gray-50 border border-gray-100 rounded-xl inline-block p-5 h-[calc(100vh-11rem)] overflow-y-scroll select-none mt-[5px] dark:bg-gray-800 dark:border-gray-700;
   }
   .moreDetails:not(.active) {
-    @apply hidden;
+    @apply hidden
   }
   .moreDetails.active {
     /* 		@apply shadow-lg
  */
   }
   .msg {
-    @apply px-5 py-3 hover:bg-gray-800 ;
+    @apply px-5 py-3 hover:bg-gray-800 dark:hover:bg-teal-700;
   }
   .msg span {
     @apply text-gray-300 hover:underline cursor-pointer select-none;
   }
   .nav-item {
-    @apply h-12 w-12 inline-flex items-center rounded-full justify-center mr-3 text-[16px] truncate text-ellipsis hover:bg-gray-100 focus:bg-gray-100 outline-none border border-transparent hover:border-gray-100  focus-within:border-gray-200 transition-all;
+    @apply h-12 w-12 inline-flex items-center rounded-full justify-center mr-3 text-[16px] truncate text-ellipsis hover:bg-gray-100 focus:bg-gray-100 outline-none border border-transparent hover:border-gray-100  focus-within:border-gray-200 transition-all dark:hover:bg-gray-700 dark:focus:bg-gray-700  dark:focus-within:border-gray-600 dark:hover:border-gray-600
   }
   .subheader {
     @apply text-sm text-gray-500 pl-7 my-2 flex select-none;
@@ -70,7 +70,7 @@
     font-family: "Inter", sans-serif;
   }
 	#chatSidenav {
-		right: -270px
+		@apply lg:right-[-270px] md:right-[-270px] right-[-100vw]
 	}
 	nav.active {
 		@apply w-[calc(100vw-270px)]

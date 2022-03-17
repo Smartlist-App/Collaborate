@@ -10,9 +10,17 @@
 			href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp|Outfit|Inter" />
 		<script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/kutty@latest/dist/kutty.min.js"></script>
+		<script>
+			const EVENT_ID = '6227ea2c7aabff48117758b7';
+			const ACCOUNT_INFO = {
+				name: "Manu",
+				email: "manuthecoder@protonmail.com",
+				image: "https://replit.com/cdn-cgi/image/width=1920,quality=80/https://storage.googleapis.com/replit/images/1615307601188_444d33267b0ab288b076f21da2abafc2.jpeg"
+			}
+		</script>
 	</head>
-	<body class="transition-padding pl-[300px] pt-[5rem]">
-		<nav id="nav" class="left-0 fixed h-[5rem] top-0 flex w-full z-30 backdrop-blur-lg" style="background:rgba(255,255,255,.4)!important">
+	<body class="dark:bg-gray-900 transition-padding pl-[300px] pt-[5rem] dark:text-white">
+		<nav id="nav" class="left-0 fixed h-[5rem] top-0 flex w-full z-30 dark:bg-gray-800 bg-white">
 			<a href="https://events5.manuthecoder.repl.co/events/<%=event._id%>" target="_blank" class="px-4 nav-item material-ripple w-auto text-lg"><%=event.title%> <i class="material-icons ml-4">open_in_new</i></a>
 			<div class="ml-auto flex items-center">
 				<a href="javascript:void(0)" id="chatTrigger" class="center-ripple nav-item material-ripple"><i class="material-icons">chat</i></a>
@@ -21,7 +29,7 @@
 
 					<a 
 						onclick="document.getElementById('share-modal').classList.toggle('hidden')"
-						href="javascript:void(0)" id="share-trigger" class="border-none px-5 w-auto ml-2 material-ripple@light rounded-xl focus:bg-Amaranth-900 focus:ring-0 ring-0 bg-Amaranth-700 hover:shadow-lg hover:shadow-Amaranth-100 h-12 hover:bg-Amaranth-800 px-4 text-white gap-3 nav-item material-ripple"><i class="material-icons align-center">share</i> Share</a>
+						href="javascript:void(0)" id="share-trigger" class="border-none px-5 w-auto ml-2 material-ripple@light rounded-xl focus:bg-Amaranth-900 focus:ring-0 ring-0 bg-Amaranth-700 hover:shadow-lg hover:shadow-Amaranth-100 dark:hover:shadow-Amaranth-900 h-12 hover:bg-Amaranth-800 px-4 text-white gap-3 nav-item material-ripple"><i class="material-icons align-center">share</i> Share</a>
 	
 				<button class="mx-2 outline-none focus:ring-2 ring-Amaranth-200 bg-gray-300 material-ripple rounded-full">
 					<img src="https://storage.googleapis.com/replit/images/1615307601188_444d33267b0ab288b076f21da2abafc2.jpeg" alt="ManuTheCoder" onload="this.classList.remove('opacity-0')" class="transition-all opacity-0 w-10 h-10 rounded-full"/>
@@ -29,12 +37,12 @@
 			</div>
 		</nav>
 
-		<div id="share-modal" class="fixed right-20 top-20 shadow-lg w-96 z-50 border bg-white rounded-lg -mt-2 animation-scale px-7 py-5 hidden">
+		<div id="share-modal" class="fixed right-20 top-20 shadow-lg w-96 z-50 border bg-white rounded-lg -mt-2 animation-scale px-7 py-5 dark:border-gray-600 hidden dark:bg-gray-700">
 			<p class="text-gray-500 my-3 rounded-lg bg-blue-300 p-3 text-sm select-none text-blue-900">Due to COVID-19, we're temporarily increasing the collaborator limit to 25. </p>
 			<h3 class="text-xl mb-2 my-4">Share</h3>
 			<p class="text-gray-500 my-1">Invite up to 15 collaborators</p>
 			<div class="flex gap-2 pb-2">
-				<input type="text" class="select-none px-5 py-2 rounded-2xl my-3 bg-gray-100 focus:border-gray-900 border-2 border-transparent w-full focus:bg-gray-200 outline-none" placeholder="Invite by email..."/>
+				<input type="text" class="dark:bg-gray-600 select-none px-5 py-2 rounded-2xl my-3 bg-gray-100 focus:border-gray-900 border-2 border-transparent w-full focus:bg-gray-200 dark:focus:border-white dark:focus:ring-white dark:focus:bg-gray-600" placeholder="Invite by email..."/>
 				<button class="text-sm w-[100px] px-5 py-2 rounded-2xl my-3 bg-gray-800 text-white material-ripple hover:shadow-lg material-ripple@light focus:border-gray-500 border-2 border-transparent w-full focus:bg-gray-900 outline-none">Send</button>
 			</div>
 			
@@ -102,26 +110,17 @@
 			<div class="flex items-center justify-center w-full h-full"> <div class="spinner w-10 h-10" role="status"> <span class="sr-only">Loading...</span> </div> </div>
 		</main>
 
-<aside id="chatSidenav" class="right-0 fixed top-0 w-[270px] h-screen z-50 bg-gray-900 text-white">
+<aside id="chatSidenav" class="sm:transition-all lg:right-0 md:right-0 right-[-100vw] fixed top-0 w-full md:w-[270px] lg:w-[270px] h-screen z-50 bg-gray-900 dark:bg-teal-900 text-white">
   <header class="sticky top-0 pl-6 pr-2 h-20 items-center py-3 text-gray-100 flex gap-3 text-lg">
     Chat
-    <button class="w-10 h-10 inline-flex hover:bg-gray-800 items-center justify-center rounded-full ml-auto material-ripple center-ripple" onclick="document.getElementById('chatTrigger').click()">
+    <button class="w-10 h-10 inline-flex hover:bg-gray-800 dark:bg-teal-800 items-center justify-center rounded-full ml-auto material-ripple center-ripple dark:hover:bg-teal-800" onclick="document.getElementById('chatTrigger').click()">
 			<i class="material-icons">chevron_right</i>
 		</button>
   </header>
-  <main class="mr-auto overflow-x-hidden overflow-y-scroll h-screen pb-32">
-    <section class="msg"><span>Manu</span><br />Test</section>
-    <section class="msg"><span>John Doe</span><br />Test</section>
-    <section class="msg"><span>Jane Doe</span><br />Test</section>
-    <section class="msg"><span>Amogus</span><br />Test</section>
-    <section class="msg"><span>bruh wtf</span><br />Test</section>
-    <section class="msg"><span>Sussy baka</span><br />Test</section>
-    <section class="msg"><span>Sussy baka</span><br />Test</section>
-    <section class="msg"><span>Sussy baka</span><br />Test</section>
-  </main>
-  <footer class="sticky bottom-0 bg-white h-16 text-sm flex items-center gap-2 px-3 bg-gray-900">
-  <div class="h-10">
-    <input id="chatInput" type="text" class="outline-none rounded-full bg-gray-800 px-4 bg-gray-700 h-full w-[calc(100%-10px)]" placeholder="Message @everyone" />
+  <main class="mr-auto overflow-x-hidden overflow-y-scroll h-screen pb-[165px]" id="chatContainer"></main>
+  <footer class="sticky w-full bottom-0 bg-white h-16 text-sm flex items-center gap-2 px-3 bg-gray-900 dark:bg-teal-900">
+  <div class="h-10 w-full">
+    <input id="chatInput" type="text" class="outline-none rounded-full bg-gray-800 px-4 bg-gray-700 dark:bg-teal-700 w-full h-full w-[calc(100%-20px)] dark:placeholder-teal-400 dark:border-teal-600 dark:focus:ring-teal-600 dark:focus:border-teal-600 ring-inset" placeholder="Message @everyone" />
   
   </div>
     <button class="w-10 h-10 inline-flex items-center rounded-full justify-center"><i class="material-icons">send</i></button>

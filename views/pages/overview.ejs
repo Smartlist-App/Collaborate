@@ -1,17 +1,17 @@
 <main class="event-container">
-	<div class="bg-gray-200 rounded-2xl">
+	<div class="bg-gray-200 dark:bg-gray-700 rounded-2xl">
 		<img loading="lazy" onload="this.classList.remove('opacity-0')" src="<%=event.banner%>" class="h-56 object-cover opacity-0 transition-all w-full rounded-2xl my-10" draggable="false"/>
 	</div>
 	<h1 class="text-4xl my-5"><%=event.title%></h1>
 	<h2 class="text-2xl mb-4 text-gray-600"><%=event.short_description%></h2>
 	<section>
-		<div class="m-1 badge bg-gray-200 text-gray-900"><%=new Date(event.datetime)%></div>
-		<div class="m-1 badge bg-gray-200 text-gray-900"><%=event.location%></div>
-		<div class="m-1 badge bg-gray-200 text-gray-900">$<%=event.cost%></div>
+		<div class="m-1 badge dark:text-white dark:bg-gray-700 bg-gray-200 text-gray-900"><%=new Date(event.datetime)%></div>
+		<div class="m-1 badge dark:text-white dark:bg-gray-700 bg-gray-200 text-gray-900"><%=event.location%></div>
+		<div class="m-1 badge dark:text-white dark:bg-gray-700 bg-gray-200 text-gray-900">$<%=event.cost%></div>
 		<% 
 			event.categories.forEach(d => { 
 		%>
-			<div class="m-1 badge bg-gray-200 text-gray-900">
+			<div class="m-1 badge dark:bg-gray-700 dark:text-white bg-gray-200 text-gray-900">
 				<%=d;%>
 			</div>
 		<%
