@@ -66,14 +66,14 @@ function createEventData(data: Object, table: string): Promise<string> {
 
 function deleteEventData(id: string, table: string): Promise<string> {
 	return new Promise((reject, resolve) => {
-		MongoClient.connect(DATABASE_URL, function(err, db) {
+		MongoClient.connect(DATABASE_URL, (err, db) => {
 		  if (err) throw err;
-		  let dbo = db.db("mydb");
-		  let query = { id: new ObjectId(id) };
-		  dbo.collection("customers").deleteOne(query, (err, obj) => {
+		  let dbo = db.db("Events")
+		  let query = { _id: new ObjectId(id) }
+		  dbo.collection(table).deleteOne(query, (err, obj) => {
 		    if (err) throw err;
-		    resolve("1 document deleted");
-		    db.close();
+				resolve("1 document deleted")
+		    db.close()
 		  });
 		});	
 	})
@@ -138,10 +138,12 @@ io.on("connection", (socket: any) => {
   });
 
 	socket.on("delete-menu", async (id: string) => {
-    data.parent = new ObjectId(data.parent);
-		data.categories = data.categories.filter(String)
-    let res = await deleteEventData(id, "Food");
-    io.to(token).emit("delete-menu-res", d);
+		try {
+	    let res = await deleteEventData(id, "Food");
+		} catch (err) {
+			console.log(err)
+		}
+    io.to(token).emit("delete-menu-res", id);
   });
 
   socket.on("disconnect", () => {

@@ -865,9 +865,30 @@ a.badge:focus {
   background-color: rgba(203, 213, 225, var(--tw-bg-opacity));
 }
 
+.btn-outline-dark:hover, .prose a.btn-outline-dark:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(15, 23, 42, var(--tw-bg-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgba(15, 23, 42, var(--tw-border-opacity));
+  --tw-text-opacity: 1;
+  color: rgba(255, 255, 255, var(--tw-text-opacity));
+}
+
+.btn-outline-dark, .prose a.btn-outline-dark {
+  border-width: 1px;
+  --tw-text-opacity: 1;
+  color: rgba(15, 23, 42, var(--tw-text-opacity));
+}
+
 .btn:disabled {
   cursor: not-allowed !important;
   opacity: 0.25 !important;
+  pointer-events: none !important;
+}
+
+.btn-loading {
+  cursor: wait !important;
+  opacity: 0.75 !important;
   pointer-events: none !important;
 }
 
@@ -1837,8 +1858,16 @@ nav.active {
   height: 1.25rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .h-56 {
   height: 14rem;
+}
+
+.h-3 {
+  height: 0.75rem;
 }
 
 .w-full {
@@ -1879,6 +1908,14 @@ nav.active {
 
 .w-72 {
   width: 18rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-3 {
+  width: 0.75rem;
 }
 
 .min-w-full {
@@ -2101,6 +2138,11 @@ nav.active {
   background-color: rgba(0,0,0,.05);
 }
 
+.bg-Amaranth-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(120 11 24 / var(--tw-bg-opacity));
+}
+
 .bg-\[url\(\'\<\%\=event\.banner\%\>\'\)\] {
   background-image: url('<%=event.banner%>');
 }
@@ -2269,6 +2311,10 @@ nav.active {
   padding-top: 0.75rem;
 }
 
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -2375,11 +2421,6 @@ nav.active {
 .text-gray-800 {
   --tw-text-opacity: 1;
   color: rgb(31 41 55 / var(--tw-text-opacity));
-}
-
-.text-green-700 {
-  --tw-text-opacity: 1;
-  color: rgb(21 128 61 / var(--tw-text-opacity));
 }
 
 .text-gray-600 {
@@ -2803,11 +2844,6 @@ input:checked + label {
   .dark\:text-gray-300 {
     --tw-text-opacity: 1;
     color: rgb(209 213 219 / var(--tw-text-opacity));
-  }
-
-  .dark\:text-green-200 {
-    --tw-text-opacity: 1;
-    color: rgb(187 247 208 / var(--tw-text-opacity));
   }
 
   .dark\:placeholder-teal-400::-moz-placeholder {

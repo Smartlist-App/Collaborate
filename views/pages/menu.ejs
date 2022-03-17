@@ -60,9 +60,11 @@
 					<div class="items"></div>`;
 				document.getElementById("menu").appendChild(col);
 			}
+			
 			let container = document.querySelector(`[data-col="${category}"]`);
 			
-			let containerItem = document.createElement('DIV');
+			let containerItem = document.createElement('DIV')
+			containerItem.setAttribute('data-meal-id', item._id)
 			containerItem.innerHTML = `
 			<div class="px-5 py-4"><span class="dark:text-gray-200 text-gray-700 my-2">${item.name}</span>
 			<br>${item.categories.filter(String).map(d => `<div class="badge bg-[rgba(0,0,0,0.1)] text-gray-700 dark:text-gray-300 m-1 ml-0 text-xs px-2 py-1">${d}</div>`).join('')}
@@ -78,7 +80,9 @@
 					<span class="flex text-sm">Revenue</span>
 					<span class="text-md text-gray-700 dark:text-gray-200">\$${item.price}</span>
 				</div>
-			<a href="javascript:void(0)" onclick="deleteMenu(this.getAttribute('data-id'))" data-id="${item._id}" class="text-green-700 dark:text-green-200">Delete</a>
+<a onclick="deleteMenuItem(this.getAttribute('data-id'), this)" data-id="${item._id}" class="mt-2 bg-Amaranth-600 text-white border-transparent material-ripple btn btn-outline-dark btn">
+  <span>Delete</span>
+</a>
 			</div>
 
 		</div>
@@ -89,7 +93,7 @@
 				if(document.querySelector('.moreDetails.active')) {
 						document.querySelector('.moreDetails.active').classList.remove('active')
 				}
-									containerItem.querySelector('.moreDetails').classList.add('active')
+				containerItem.querySelector('.moreDetails').classList.add('active')
 
 			})
 		})
@@ -114,5 +118,15 @@
 		});
 	})
 
+	function deleteMenuItem(id, el) {
+		socket.emit('delete-menu', id);
+		el.innerHTML = `
+  <span class="spinner" role="status" aria-hidden="true"></span>`
+	}
+
+	socket.on("delete-menu-res", (e) => {
+		let i = document.querySelector(`[data-meal-id="${e}"]`);
+		i && i.remove();
+	})
 	socket.on("add-menu-res", (e) => addMenuItems(e.type, [e]))
 </script>
