@@ -64,6 +64,21 @@ function createEventData(data: Object, table: string): Promise<string> {
   });
 }
 
+function deleteEventData(id: string, table: string): Promise<string> {
+	return new Promise((reject, resolve) => {
+		MongoClient.connect(DATABASE_URL, function(err, db) {
+		  if (err) throw err;
+		  let dbo = db.db("mydb");
+		  let query = { id: new ObjectId(id) };
+		  dbo.collection("customers").deleteOne(query, (err, obj) => {
+		    if (err) throw err;
+		    resolve("1 document deleted");
+		    db.close();
+		  });
+		});	
+	})
+}
+
 const app = express();
 
 app.set("view engine", "ejs");
