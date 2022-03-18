@@ -4,9 +4,11 @@
   <a class="hidden" x-spread="trigger" id="AttributesTrigger"></a>
   <div class="backdrop-blur-lg dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
     <div class="dialog-content">
-			<div class="text-xl border-0 my-3">Attributes</div>
+			<div class="text-xl border-0 my-3">
+				Attributes
+				<p class="text-sm my-1 opacity-75">Create attributes by editing the event's settings</p>
+			</div>
 			<div id="Attributes"></div>
-			<br>
 			<button type="submit" x-spread="close" class="modal-btn material-ripple">Done</button>
     </div>
   </div>
@@ -81,10 +83,16 @@
 		setTimeout(() => {
 			document.getElementById('AttributesTrigger').click();
 			document.getElementById('Attributes').innerHTML = `
+${Object.keys(data).length == 0 ? `
+<section class="px-4 bg-gray-100 dark:bg-gray-600 rounded-lg py-2 mb-2">
+No attributes
+</section>`: ""}
 ${Object.keys(data).map(attr => {
 	return `
-<p>${attr}</p>
-<p class="mb-4 text-gray-600 dark:text-gray-300">${data[attr]}</p>
+<section class="px-4 bg-gray-100 dark:bg-gray-600 rounded-lg py-2 mb-2">
+	<p class="my-1">${attr}</p>
+	<p class="my-1 text-gray-600 dark:text-gray-300">${data[attr]}</p>
+</section>
 `;
 }).join('')}
 `;

@@ -5,6 +5,7 @@
 <html class="theme-<%=event.pageStyle;%>">
 <head>
   <meta charset="UTF-8">
+	<title><%=event.name%></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 	<link rel=stylesheet href="https://kutty.netlify.app/build.css">
@@ -53,11 +54,11 @@
 				@apply text-gray-700
 			}
 			.container__paragraph--category {
-				@apply text-xs text-gray-800;
+				@apply text-xs text-gray-800 capitalize;
 				font-family: 'Inter', sans-serif
 			}
 			.link {
-				@apply underline hover:decoration-2 outline-none focus:ring ring-gray-900
+				@apply underline hover:decoration-2 outline-none focus:ring ring-black focus:no-underline
 			}
 			.container__paragraph--content {
 				@apply text-gray-700 my-1 mb-5
@@ -109,26 +110,39 @@
 				<div x-data="dialog()">
 					<button class="banner-img__button" id="signup-trigger" x-spread="trigger">Sign up now!</button>
 					  <div class="dialog items-center backdrop-blur-lg cursor-auto flex" x-spread="dialog" x-cloak>
-							<div class="dialog-content text-gray-900">
-								<div class="dialog-header text-lg">
+							<div class="overflow-y-scroll rounded-[28px] p-[25px] dialog-content text-gray-900">
+								<div class="text-xl">
 									<div style="font-family:'Inter', sans-serif">
 										Sign up
-										<p style="font-family:'Lato', sans-serif" class="text-sm text-gray-700">You'll be notified when this event starts</p>
+										<p style="font-family:'Lato', sans-serif" class="mb-5 text-sm text-gray-700">You'll be notified when this event starts</p>
 									</div>
 								</div>
-								<div class="dialog-body grid grid-cols-2 items-center gap-2">
+									<p class="text-lg my-2" style="font-family:'Inter', sans-serif">Personal information</p>
+									<div class="grid grid-cols-2 items-center gap-2">
 									 <label class="block">
 		              		<span class="text-gray-700">Full name</span>
-		                	<input type="text" id="name" class="mt-1 block w-full" placeholder="John Doe" />
+		                	<input type="text" id="name" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="John Doe" />
 		              </label>
 									<label class="block">
 		              		<span class="text-gray-700">Email</span>
-		                	<input type="text" class="mt-1 block w-full" placeholder="hello@smartlist.tech" />
+		                	<input type="text" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="hello@smartlist.tech" />
 		              </label>
 								</div>
-								<div class="dialog-footer">
+									<p class="text-lg my-2 mt-5" style="font-family:'Inter', sans-serif">Additional info</p>
+									<div class="grid grid-cols-2 items-center gap-2">
+								<%
+									Object.keys(event.attributes).forEach(key => {
+								%>
+									<label class="block">
+		              		<span class="text-gray-700"><%=key%></span>
+		                	<input type="text" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
+		              </label>
+								<%  }); %>
+								</div>
+
+									<div class="text-right mt-5">
 									<button type="button" class="btn btn-light" @click="close">Cancel</button>
-									<button type="button" class="btn bg-gray-900 text-white ring-black">Next</button>
+									<button type="button" class="btn bg-gray-900 text-white ring-black">Sign up</button>
 								</div>
 							</div>
 						</div>
