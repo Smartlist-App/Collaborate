@@ -31,12 +31,38 @@
         placeholder="Search for attendeess"
       />
     </div>
+		<div x-data="dialog()" class="ml-auto">
 		<button
       type="button"
-      class="ml-auto text-white bg-Amaranth-700 hover:bg-Amaranth-800 float-right material-ripple material-ripple@light hover:shadow-lg font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 dark:bg-Amaranth-600 dark:hover:bg-Amaranth-700 dark:focus:ring-Amaranth-800 flex gap-4 items-center"
+			x-spread="trigger"
+      class="text-white bg-Amaranth-700 hover:bg-Amaranth-800 float-right material-ripple material-ripple@light hover:shadow-lg font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 dark:bg-Amaranth-600 dark:hover:bg-Amaranth-700 dark:focus:ring-Amaranth-800 flex gap-4 items-center"
     >
       <i class="material-icons">add</i>Create
     </button>
+			<div class="backdrop-blur-lg dialog cursor-auto flex items-center" x-spread="dialog" x-cloak>
+    <div class="dialog-content">
+			<div class="text-xl border-0 my-3">
+				Create user
+			</div>
+			<form id="addUserForm">
+					<label class="block mb-3">
+						<span min="0" class="label">Name</span>
+						<input required id="attendeeName" type="text" class="input" placeholder="John Doe" />
+					</label>
+					<label class="block mb-3">
+						<span min="0" class="label">Email</span>
+						<input required id="attendeeEmail" type="email" class="input" placeholder="Type email here..." />
+					</label>
+					<label class="block mb-3">
+						<span min="0" class="label">Phone</span>
+						<input required id="attendeePhone" type="tel" class="input" placeholder="+1 (949)-123-456" />
+					</label>
+			</form>
+			<button type="submit" x-spread="close" class="modal-btn material-ripple">Done</button>
+    </div>
+  </div>
+</div>
+		
   </div>
   <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
@@ -46,23 +72,23 @@
             <tr>
               <th
                 scope="col"
-                class="table-col"
+                class="table-col w-[30%]"
               >
                 Name
               </th>
               <th
                 scope="col"
-                class="table-col"
+                class="table-col w-[30%]"
               >
                 Email
               </th>
               <th
                 scope="col"
-                class="table-col"
+                class="table-col w-[25%]"
               >
                 Phone
               </th>
-              <th scope="col" class="relative py-3 px-6">
+              <th scope="col" class="relative py-3 px-6 w-[15%]">
                 <span class="sr-only">Edit</span>
               </th>
             </tr>
@@ -118,5 +144,17 @@ ${Object.keys(data).map(attr => {
 			viewAttributes(user.attributes)
 		})
 	})
-	
+	document.getElementById('table-search').addEventListener('keyup', () => {
+		let rows = document.querySelectorAll("#users tr");
+		let query = document.getElementById('table-search').value;
+		
+		rows.forEach(row => {
+			if(row.innerText.includes(query.toLowerCase())) {
+				row.classList.remove("hidden")
+			}
+			else {
+				row.classList.add("hidden")
+			}
+		})
+	})
 </script>

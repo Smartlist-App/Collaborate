@@ -1231,6 +1231,18 @@ a.badge:focus {
   }
 }
 
+.label {
+  --tw-text-opacity: 1;
+  color: rgb(55 65 81 / var(--tw-text-opacity));
+}
+
+@media (prefers-color-scheme: dark) {
+  .label {
+    --tw-text-opacity: 1;
+    color: rgb(229 231 235 / var(--tw-text-opacity));
+  }
+}
+
 option:hover {
   background: #aaa
 }
@@ -2150,6 +2162,26 @@ nav.active {
   width: 18rem;
 }
 
+.w-\[\] {
+  width: ;
+}
+
+.w-\[50\%\] {
+  width: 50%;
+}
+
+.w-\[25\%\] {
+  width: 25%;
+}
+
+.w-\[30\%\] {
+  width: 30%;
+}
+
+.w-\[15\%\] {
+  width: 15%;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -2160,6 +2192,12 @@ nav.active {
 
 .flex-1 {
   flex: 1 1 0%;
+}
+
+.scale-0 {
+  --tw-scale-x: 0;
+  --tw-scale-y: 0;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .cursor-auto {
