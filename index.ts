@@ -83,6 +83,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
+app.use(express.json())
 
 app.set("trust proxy", 1); // trust first proxy
 
@@ -179,6 +180,19 @@ app.get(["/", "/pages/event-website"], async (req: any, res: any) => {
       layout: false,
     }
   );
+});
+
+app.post("/add-attendee", async (req: any, res: any) => {
+	console.log(req.body)
+	let eventData = await createEventData({
+		name: req.body.name,
+		email: req.body.email,
+		attributes: req.body.attributes,
+		phone: req.body.phone,
+		parent: new ObjectId(req.body.parent)
+	}, "Attendees");
+	console.log(eventData);
+	res.send("");
 });
 
 app.get("/pages/overview", async (req: any, res: any) => {

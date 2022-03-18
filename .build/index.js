@@ -114,6 +114,7 @@ function deleteEventData(id, table) {
 const app = (0, import_express.default)();
 app.set("view engine", "ejs");
 app.use(import_express_ejs_layouts.default);
+app.use(import_express.default.json());
 app.set("trust proxy", 1);
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
@@ -177,6 +178,18 @@ app.get(["/", "/pages/event-website"], async (req, res) => {
     event: await eventInfo(token, req),
     layout: false
   });
+});
+app.post("/add-attendee", async (req, res) => {
+  console.log(req.body);
+  let eventData2 = await createEventData({
+    name: req.body.name,
+    email: req.body.email,
+    attributes: req.body.attributes,
+    phone: req.body.phone,
+    parent: new import_mongodb.ObjectId(req.body.parent)
+  }, "Attendees");
+  console.log(eventData2);
+  res.send("");
 });
 app.get("/pages/overview", async (req, res) => {
   res.render("pages/overview", {

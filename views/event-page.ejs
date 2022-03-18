@@ -110,7 +110,8 @@
 				<div x-data="dialog()">
 					<button class="banner-img__button" id="signup-trigger" x-spread="trigger">Sign up now!</button>
 					  <div class="dialog items-center backdrop-blur-lg cursor-auto flex" x-spread="dialog" x-cloak>
-							<div class="overflow-y-scroll rounded-[28px] p-[25px] dialog-content text-gray-900">
+							<form id="signup" class="overflow-y-scroll rounded-[28px] p-[25px] dialog-content text-gray-900">
+								<input type="hidden" name="parent" value="<%=event._id;%>">
 								<div class="text-xl">
 									<div style="font-family:'Inter', sans-serif">
 										Sign up
@@ -118,14 +119,18 @@
 									</div>
 								</div>
 									<p class="text-lg my-2" style="font-family:'Inter', sans-serif">Personal information</p>
-									<div class="grid grid-cols-2 items-center gap-2">
+									<div class="grid grid-cols-3 items-center gap-2">
 									 <label class="block">
 		              		<span class="text-gray-700">Full name</span>
-		                	<input type="text" id="name" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="John Doe" />
+		                	<input type="text" required name="name" id="name" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
 		              </label>
 									<label class="block">
 		              		<span class="text-gray-700">Email</span>
-		                	<input type="text" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="hello@smartlist.tech" />
+		                	<input type="email" required name="email" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
+		              </label>
+										<label class="block">
+		              		<span class="text-gray-700">Phone number</span>
+		                	<input type="tel" required name="phone" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
 		              </label>
 								</div>
 									<p class="text-lg my-2 mt-5" style="font-family:'Inter', sans-serif">Additional info</p>
@@ -135,16 +140,16 @@
 								%>
 									<label class="block">
 		              		<span class="text-gray-700"><%=key%></span>
-		                	<input type="text" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
+		                	<input type="text" name="<%=key%>" class="border-gray-300 focus:border-gray-900 focus:ring-gray-900 mt-1 block w-full" placeholder="Type response here..." />
 		              </label>
 								<%  }); %>
 								</div>
 
 									<div class="text-right mt-5">
 									<button type="button" class="btn btn-light" @click="close">Cancel</button>
-									<button type="button" class="btn bg-gray-900 text-white ring-black">Sign up</button>
+									<button type="submit" class="btn bg-gray-900 text-white ring-black">Sign up</button>
 								</div>
-							</div>
+							</form>
 						</div>
 				</div>
 				<button class="banner-img__button banner-img__button--outlined">Add to my calendar</button>
@@ -217,6 +222,19 @@
 			setTimeout(() => {
 				document.getElementById('name').focus()
 			}, 100)
+		})
+		document.getElementById('signup').addEventListener('submit', (e) => {
+			e.preventDefault();
+			const form = document.getElementById('signup');
+			const data = Object.fromEntries(new URLSearchParams(new FormData(form)));
+			alert(data)
+			fetch('/add-attendee', {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: { 'Content-Type': 'application/json' }
+			})
+			.then(res => res.text())
+			.then(res => alert(res))
 		})
 	</script>
 </body>
