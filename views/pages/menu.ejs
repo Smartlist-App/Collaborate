@@ -47,7 +47,7 @@
 <main class="p-3 whitespace-nowrap overflow-x-auto" id="menu"></main>
 <script>
 	var res = <%-JSON.stringify(data)%>
-	res = res.groupBy( ({ type }) => type );
+	res = _.groupBy(res, ({ type }) => type );
 	function addMenuItems(category, data) {
 		data.forEach(item => {
 			if(!document.querySelector(`[data-col="${category}"]`)) {
