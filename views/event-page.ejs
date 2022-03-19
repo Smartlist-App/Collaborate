@@ -5,7 +5,7 @@
 <html class="theme-<%=event.pageStyle;%>">
 <head>
   <meta charset="UTF-8">
-	<title><%=event.name%></title>
+	<title><%=event.title%></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 	<link rel=stylesheet href="https://kutty.netlify.app/build.css">
@@ -226,8 +226,14 @@
 		document.getElementById('signup').addEventListener('submit', (e) => {
 			e.preventDefault();
 			const form = document.getElementById('signup');
-			const data = Object.fromEntries(new URLSearchParams(new FormData(form)));
-			alert(data)
+			let data = Object.fromEntries(new URLSearchParams(new FormData(form)));
+			data.attributes = {};
+			Object.keys(data).forEach(param => {
+				if(!['name', 'phone', 'email', 'parent', 'attributes'].includes(param)) {
+					data.attributes[param] = data[param];
+					delete data[param];
+				}
+			})
 			fetch('/add-attendee', {
 				method: 'POST',
 				body: JSON.stringify(data),

@@ -68,7 +68,7 @@
     <div class="inline-block py-2 min-w-full sm:px-6 lg:px-8">
       <div class="overflow-hidden shadow-md sm:rounded-lg">
         <table class="min-w-full">
-          <thead class="bg-gray-50 dark:bg-gray-700">
+          <thead class="bg-gray-100 dark:bg-gray-700">
             <tr>
               <th
                 scope="col"
@@ -134,14 +134,17 @@ ${Object.keys(data).map(attr => {
 				<td class="table-td-header">${user.name}</td>
 				<td class="table-td"><a href="mailto:${user.email}" target="_blank" class="hover:underline">${user.email}</a></td>
 				<td class="table-td"><a href="tel:${user.email}" target="_blank" class="hover:underline">${user.phone}</a></td>
-				<td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
-					<a data-attr="${user._id}" href="javascript:void(0)" class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline mr-2">Attributes</a>
-					<a href="javascript:void(0)" class="text-Amaranth-600 dark:text-Amaranth-500 hover:underline">Delete</a>
+				<td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap flex">
+					<button data-attr="${user._id}" class="ring-[transparent] btn text-gray-600 ring-none dark:text-gray-300 focus:shadow-lg">Attributes</button>
+					<button data-delete-id="${user._id}" class="btn text-red-600 ring-[transparent] ring-none dark:text-red-400 focus:shadow-lg"><span>Delete</span></button>
 				</td>
  `;
 		document.getElementById('users').appendChild(row)
 		document.querySelector(`[data-attr="${user._id}"]`).addEventListener("click", () => {
 			viewAttributes(user.attributes)
+		})
+		document.querySelector(`[data-delete-id="${user._id}"]`).addEventListener("click", () => {
+			deleteUser(document.querySelector(`[data-delete-id="${user._id}"]`), user.attributes)
 		})
 	})
 	document.getElementById('table-search').addEventListener('keyup', () => {
@@ -157,4 +160,24 @@ ${Object.keys(data).map(attr => {
 			}
 		})
 	})
+	function deleteUser(el, id) {
+		el.disabled = true
+		el.classList.add('btn-loading')
+		el.innerHTML += `<span class="spinner w-5 h-5" role="status" aria-hidden="true"></span>`
+		el.style.width = el.getBoundingClientRect().width+"px"
+		el.querySelector('span').classList.add('hidden')
+	}
+	document.getElementById('addUserForm').addEventListener('submit', (e) => {
+			e.preventDefault();
+			const form = document.getElementById('addUserForm');
+			const data = Object.fromEntries(new URLSearchParams(new FormData(form)));
+			alert(data)
+			fetch('/add-attendee', {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: { 'Content-Type': 'application/json' }
+			})
+			.then(res => res.text())
+			.then(res => alert(res))
+		})
 </script>

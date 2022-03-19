@@ -886,6 +886,12 @@ a.badge:focus {
   pointer-events: none !important;
 }
 
+.btn-loading {
+  cursor: wait !important;
+  opacity: 0.75 !important;
+  pointer-events: none !important;
+}
+
 .btn-loading .spinner {
   margin-top: -3px;
 }
@@ -1781,6 +1787,8 @@ nav.active {
 
 .table-td {
   white-space: nowrap;
+  --tw-bg-opacity: 1;
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1.5rem;
@@ -1793,6 +1801,10 @@ nav.active {
 
 @media (prefers-color-scheme: dark) {
   .table-td {
+    background-color: transparent;
+  }
+
+  .table-td {
     --tw-text-opacity: 1;
     color: rgb(156 163 175 / var(--tw-text-opacity));
   }
@@ -1801,7 +1813,7 @@ nav.active {
 .table-tr {
   border-bottom-width: 1px;
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -2122,6 +2134,10 @@ nav.active {
   height: 4rem;
 }
 
+.h-5 {
+  height: 1.25rem;
+}
+
 .h-56 {
   height: 14rem;
 }
@@ -2170,6 +2186,10 @@ nav.active {
   width: 15%;
 }
 
+.w-5 {
+  width: 1.25rem;
+}
+
 .w-72 {
   width: 18rem;
 }
@@ -2199,6 +2219,10 @@ nav.active {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-cols-2 {
@@ -2674,9 +2698,9 @@ nav.active {
   color: rgb(75 85 99 / var(--tw-text-opacity));
 }
 
-.text-Amaranth-600 {
+.text-red-600 {
   --tw-text-opacity: 1;
-  color: rgb(223 21 45 / var(--tw-text-opacity));
+  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -2738,6 +2762,10 @@ nav.active {
 .ring-Amaranth-200 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(247 175 184 / var(--tw-ring-opacity));
+}
+
+.ring-\[transparent\] {
+  --tw-ring-color: transparent;
 }
 
 .filter {
@@ -2967,6 +2995,12 @@ input:checked + label {
           text-decoration-line: none;
 }
 
+.focus\:shadow-lg:focus {
+  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -3090,9 +3124,9 @@ input:checked + label {
     color: rgb(209 213 219 / var(--tw-text-opacity));
   }
 
-  .dark\:text-Amaranth-500 {
+  .dark\:text-red-400 {
     --tw-text-opacity: 1;
-    color: rgb(237 63 84 / var(--tw-text-opacity));
+    color: rgb(248 113 113 / var(--tw-text-opacity));
   }
 
   .dark\:text-gray-200 {
