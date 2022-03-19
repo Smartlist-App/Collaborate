@@ -36,81 +36,7 @@ var __toModule = (module2) => {
 var import_express = __toModule(require("express"));
 var import_express_session = __toModule(require("express-session"));
 var import_express_ejs_layouts = __toModule(require("express-ejs-layouts"));
-var import_mongodb = __toModule(require("mongodb"));
-const DATABASE_URL = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@smartlist-events.4zcyg.mongodb.net/Smartlist-Events?retryWrites=true&w=majority`;
-function eventInfo(id, req) {
-  return new Promise((resolve, reject) => {
-    if (id.length !== 24) {
-      resolve(false);
-      return;
-    }
-    if (req.session.eventCache) {
-      resolve(req.session.eventCache);
-      return;
-    }
-    import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
-      if (err)
-        throw err;
-      let dbo = db.db("Events");
-      let query = { _id: new import_mongodb.ObjectId(id) };
-      dbo.collection("EventList").find(query).toArray((err2, result) => {
-        if (err2)
-          throw err2;
-        result = result[0];
-        req.session.eventCache = result;
-        resolve(result);
-        db.close();
-      });
-    });
-  });
-}
-function eventData(parent, table) {
-  return new Promise((resolve, reject) => {
-    import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
-      if (err)
-        throw err;
-      let dbo = db.db("Events");
-      let query = { parent: new import_mongodb.ObjectId(parent) };
-      dbo.collection(table).find(query).toArray((err2, result) => {
-        if (err2)
-          throw err2;
-        resolve(result);
-        db.close();
-      });
-    });
-  });
-}
-function createEventData(data, table) {
-  return new Promise((resolve, reject) => {
-    import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
-      if (err)
-        throw err;
-      var dbo = db.db("Events");
-      dbo.collection(table).insertOne(data, (err2, res) => {
-        if (err2)
-          throw err2;
-        resolve(res);
-        db.close();
-      });
-    });
-  });
-}
-function deleteEventData(id, table) {
-  return new Promise((reject, resolve) => {
-    import_mongodb.MongoClient.connect(DATABASE_URL, (err, db) => {
-      if (err)
-        throw err;
-      let dbo = db.db("Events");
-      let query = { _id: new import_mongodb.ObjectId(id) };
-      dbo.collection(table).deleteOne(query, (err2, obj) => {
-        if (err2)
-          throw err2;
-        resolve("1 document deleted");
-        db.close();
-      });
-    });
-  });
-}
+var import_EventActions = __toModule(require("./EventActions"));
 const app = (0, import_express.default)();
 app.set("view engine", "ejs");
 app.use(import_express_ejs_layouts.default);
@@ -134,9 +60,9 @@ io.on("connection", (socket) => {
     io.to(token).emit("chat-message", data);
   });
   socket.on("add-menu", async (data) => {
-    data.parent = new import_mongodb.ObjectId(data.parent);
+    data.parent = new ObjectId(data.parent);
     data.categories = data.categories.filter(String);
-    let res = await createEventData(data, "Food");
+    let res = await (0, import_EventActions.createEventData)(data, "Food");
     let d = __spreadProps(__spreadValues({}, data), {
       _id: res.insertedId.toString()
     });
@@ -145,7 +71,7 @@ io.on("connection", (socket) => {
   });
   socket.on("delete-menu", async (id) => {
     try {
-      let res = await deleteEventData(id, "Food");
+      let res = await (0, import_EventActions.deleteEventData)(id, "Food");
     } catch (err) {
       console.log(err);
     }
@@ -167,7 +93,7 @@ io.on("connection", (socket) => {
 app.use(async (req, res, next) => {
   if (req.path.startsWith("/events/")) {
     res.render("event-page", {
-      event: await eventInfo(req.path.replace("/events/", ""), req),
+      event: await (0, import_EventActions.eventInfo)(req.path.replace("/events/", ""), req),
       layout: false
     });
   }
@@ -175,55 +101,55 @@ app.use(async (req, res, next) => {
 });
 app.get(["/", "/pages/event-website"], async (req, res) => {
   res.render(req.path == "/pages/event-website" ? "pages/event-website" : "index", {
-    event: await eventInfo(token, req),
+    event: await (0, import_EventActions.eventInfo)(token, req),
     layout: false
   });
 });
 app.post("/add-attendee", async (req, res) => {
   console.log(req.body);
-  let eventData2 = await createEventData({
+  let eventData2 = await (0, import_EventActions.createEventData)({
     name: req.body.name,
     email: req.body.email,
     attributes: req.body.attributes,
     phone: req.body.phone,
-    parent: new import_mongodb.ObjectId(req.body.parent)
+    parent: new ObjectId(req.body.parent)
   }, "Attendees");
   console.log(eventData2);
-  res.send("");
+  res.json([true]);
 });
 app.get("/pages/overview", async (req, res) => {
   res.render("pages/overview", {
-    event: await eventInfo(token, req),
+    event: await (0, import_EventActions.eventInfo)(token, req),
     layout: false
   });
 });
 app.get("/pages/menu", async (req, res) => {
   res.render("pages/menu", {
-    data: await eventData(token, "Food"),
+    data: await (0, import_EventActions.eventData)(token, "Food"),
     layout: false
   });
 });
 app.get("/pages/attendees", async (req, res) => {
   res.render("pages/attendees", {
-    data: await eventData(token, "Attendees"),
+    data: await (0, import_EventActions.eventData)(token, "Attendees"),
     layout: false
   });
 });
 app.get("/pages/lists", async (req, res) => {
   res.render("pages/lists", {
-    data: await eventData(token, "Lists"),
+    data: await (0, import_EventActions.eventData)(token, "Lists"),
     layout: false
   });
 });
 app.get("/pages/items", async (req, res) => {
   res.render("pages/items", {
-    data: await eventData(token, "Items"),
+    data: await (0, import_EventActions.eventData)(token, "Items"),
     layout: false
   });
 });
 app.get("/pages/outline", async (req, res) => {
   res.render("pages/outline", {
-    data: await eventData(token, "Outline"),
+    data: await (0, import_EventActions.eventData)(token, "Outline"),
     layout: false
   });
 });
